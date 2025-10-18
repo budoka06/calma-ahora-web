@@ -106,6 +106,11 @@ const MeditacionGuiada = () => {
     setIniciada(true);
     setTecnicaElegida(config.titulo);
     
+    // Cargar voces disponibles (necesario en algunos navegadores)
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.getVoices();
+    }
+    
     // Iniciar audio de fondo (fade-in)
     if (audioRef.current) {
       audioRef.current.volume = 0;
@@ -121,8 +126,8 @@ const MeditacionGuiada = () => {
       }, 100);
     }
     
-    // Narrar primer paso
-    narrarPaso(0);
+    // Narrar primer paso después de un pequeño delay
+    setTimeout(() => narrarPaso(0), 500);
   };
 
   const narrarPaso = (index: number) => {
@@ -132,8 +137,31 @@ const MeditacionGuiada = () => {
       
       const utterance = new SpeechSynthesisUtterance(config.pasos[index]);
       utterance.lang = 'es-ES';
-      utterance.rate = config.voz.rate;
-      utterance.pitch = config.voz.pitch;
+      
+      // Buscar la mejor voz en español disponible
+      const voices = window.speechSynthesis.getVoices();
+      const spanishVoices = voices.filter(voice => 
+        voice.lang.includes('es') && 
+        (voice.name.includes('Google') || voice.name.includes('Microsoft') || voice.name.includes('Natural'))
+      );
+      
+      // Preferir voces femeninas para meditación (más cálidas)
+      const femaleVoice = spanishVoices.find(voice => 
+        voice.name.toLowerCase().includes('female') || 
+        voice.name.toLowerCase().includes('mujer') ||
+        voice.name.toLowerCase().includes('lucia') ||
+        voice.name.toLowerCase().includes('monica')
+      );
+      
+      if (femaleVoice) {
+        utterance.voice = femaleVoice;
+      } else if (spanishVoices.length > 0) {
+        utterance.voice = spanishVoices[0];
+      }
+      
+      // Parámetros más naturales para meditación
+      utterance.rate = 0.75; // Más lento para meditación
+      utterance.pitch = 0.95; // Ligeramente más bajo, más cálido
       utterance.volume = audioMuted ? 0 : 1;
       
       synthRef.current = utterance;
