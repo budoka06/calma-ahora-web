@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AppProvider } from "./contexts/AppContext";
+import SOSButton from "./components/SOSButton";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import RegistroUsuario from "./pages/RegistroUsuario";
@@ -23,6 +24,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <SOSButton />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/registro" element={<RegistroUsuario />} />
