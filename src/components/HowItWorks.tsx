@@ -47,10 +47,10 @@ const colorClasses: Record<string, string> = {
 
 const HowItWorks = () => {
   return (
-    <section className="py-24 bg-gradient-to-br from-background via-accent/5 to-secondary/5 relative overflow-hidden">
+    <section className="py-24 bg-gradient-to-br from-calma-lavender/30 via-calma-turquoise/20 to-calma-mint/25 relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-10 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-10 left-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-10 right-10 w-72 h-72 bg-calma-sunshine/30 rounded-full blur-3xl animate-float"></div>
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-calma-coral/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16 animate-fade-in-up">
@@ -68,9 +68,9 @@ const HowItWorks = () => {
             return (
               <div
                 key={index}
-                className="bg-card rounded-3xl p-8 shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-2 relative"
+                className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-card hover:shadow-vibrant transition-all duration-300 hover:-translate-y-2 relative border-2 border-accent/20"
               >
-                <div className="absolute -top-4 -left-4 w-12 h-12 bg-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-xl shadow-card">
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-gradient-joy rounded-full flex items-center justify-center text-white font-bold text-xl shadow-glow">
                   {index + 1}
                 </div>
                 

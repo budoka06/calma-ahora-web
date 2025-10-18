@@ -33,7 +33,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-card">
+    <section id="about" className="py-24 bg-gradient-to-br from-calma-sky/30 via-calma-mint/20 to-calma-sunshine/20">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16 animate-fade-in-up">
@@ -51,7 +51,7 @@ const About = () => {
               return (
                 <div
                   key={feature.title}
-                  className="bg-gradient-card rounded-3xl p-8 shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-2 text-center group"
+                  className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 shadow-card hover:shadow-vibrant transition-all duration-300 hover:-translate-y-2 text-center group border-2 border-primary/10"
                 >
                   <div className={`w-16 h-16 ${feature.bgClass} rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-soft group-hover:scale-110 transition-transform`}
                     style={{ animationDelay: `${index * 0.5}s` }}
