@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts/AppContext';
+import { Home } from 'lucide-react';
 
 const obtenerInstrucciones = (tecnica: string) => {
   switch (tecnica) {
@@ -100,6 +101,17 @@ const RespiracionGuiada = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4 flex items-center justify-center">
       <div className="max-w-2xl w-full space-y-8 animate-fade-in">
+        <div className="flex justify-start">
+          <Button
+            onClick={() => navigate('/')}
+            variant="ghost"
+            className="gap-2"
+          >
+            <Home className="w-5 h-5" />
+            Inicio
+          </Button>
+        </div>
+        
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold text-calma-ocean">{instrucciones.titulo}</h1>
           <p className="text-lg text-calma-ocean/80">{instrucciones.descripcion}</p>

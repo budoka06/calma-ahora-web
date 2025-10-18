@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Send, MessageCircle, ArrowLeft } from "lucide-react";
+import { Send, MessageCircle, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 
@@ -128,9 +128,10 @@ const ChatEmpatico = () => {
       <div className="container max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex items-center gap-4">
-          <Link to="/check-in">
-            <Button variant="ghost" size="icon" className="rounded-full">
-              <ArrowLeft className="h-5 w-5" />
+          <Link to="/">
+            <Button variant="ghost" className="gap-2">
+              <Home className="h-5 w-5" />
+              Inicio
             </Button>
           </Link>
           <div className="flex-1">

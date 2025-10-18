@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts/AppContext';
-import { ArrowLeft, Calendar, ArrowRight, Heart } from 'lucide-react';
+import { Home, Calendar, ArrowRight, Heart } from 'lucide-react';
 
 const obtenerEmojiPorValor = (valor: string): string => {
   const emojis: { [key: string]: string } = {
@@ -23,12 +23,12 @@ const BitacoraEmocional = () => {
       <div className="max-w-4xl mx-auto pt-8 pb-16 space-y-6 animate-fade-in">
         <div className="flex items-center justify-between">
           <Button
-            onClick={() => navigate('/check-in')}
+            onClick={() => navigate('/')}
             variant="ghost"
             className="gap-2"
           >
-            <ArrowLeft className="w-5 h-5" />
-            Volver
+            <Home className="w-5 h-5" />
+            Inicio
           </Button>
         </div>
 

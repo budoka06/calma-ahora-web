@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useAppContext } from '@/contexts/AppContext';
-import { BookHeart, AlertCircle, MessageCircle } from 'lucide-react';
+import { BookHeart, AlertCircle, MessageCircle, Home } from 'lucide-react';
 
 const emociones = [
   { emoji: '😊', label: 'Feliz', value: 'feliz' },
@@ -65,6 +65,17 @@ const CheckInEmocional = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4">
       <div className="max-w-2xl mx-auto pt-8 pb-16 space-y-6 animate-fade-in">
+        <div className="flex justify-start mb-4">
+          <Button
+            onClick={() => navigate('/')}
+            variant="ghost"
+            className="gap-2"
+          >
+            <Home className="w-5 h-5" />
+            Inicio
+          </Button>
+        </div>
+        
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold text-calma-ocean">
             ¡Hola, {nombreUsuario || 'Usuario'}! 👋
