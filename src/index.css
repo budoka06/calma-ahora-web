@@ -8,58 +8,58 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* CalmaAhora Brand Colors - Pasteles cálidos y serenos */
-    --background: 42 71% 96%; /* Arena muy claro #FAF3E0 */
-    --foreground: 215 25% 27%; /* Azul oscuro suave para texto */
+    /* CalmaAhora Brand Colors - Vibrantes y alegres */
+    --background: 45 100% 97%; /* Amarillo muy claro brillante */
+    --foreground: 240 15% 25%; /* Gris azulado para texto */
 
     /* Colores específicos de CalmaAhora */
-    --calma-ocean: 188 52% 56%; /* #5CAFBF - Azul verdoso */
-    --calma-mint: 160 45% 86%; /* #B8E0D2 - Verde agua */
-    --calma-lavender: 265 100% 83%; /* #C3A7FF - Lavanda */
-    --calma-coral: 12 100% 83%; /* #FFB5A7 - Coral suave */
-    --calma-sand: 45 71% 95%; /* #FAF3E0 - Arena claro */
+    --calma-ocean: 195 85% 55%; /* Azul cielo vibrante */
+    --calma-mint: 160 70% 65%; /* Verde menta brillante */
+    --calma-lavender: 270 80% 70%; /* Lavanda vibrante */
+    --calma-coral: 15 100% 70%; /* Coral brillante */
+    --calma-sand: 45 100% 88%; /* Amarillo cálido suave */
 
     --card: 0 0% 100%; /* Blanco puro para cards */
-    --card-foreground: 215 25% 27%;
+    --card-foreground: 240 15% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 27%;
+    --popover-foreground: 240 15% 25%;
 
-    /* Azul verdoso como color principal */
-    --primary: 188 52% 56%; /* #5CAFBF */
+    /* Azul cielo vibrante como color principal */
+    --primary: 195 85% 55%; /* Azul brillante */
     --primary-foreground: 0 0% 100%;
 
-    /* Lavanda como secundario */
-    --secondary: 265 100% 83%; /* #C3A7FF */
-    --secondary-foreground: 265 40% 20%;
+    /* Coral brillante como secundario */
+    --secondary: 15 100% 70%; /* Coral vibrante */
+    --secondary-foreground: 0 0% 100%;
 
-    /* Verde agua para acentos */
-    --accent: 160 45% 86%; /* #B8E0D2 */
-    --accent-foreground: 160 40% 20%;
+    /* Lavanda para acentos */
+    --accent: 270 80% 70%; /* Lavanda vibrante */
+    --accent-foreground: 0 0% 100%;
 
-    --muted: 42 50% 90%;
-    --muted-foreground: 215 15% 50%;
+    --muted: 45 60% 92%;
+    --muted-foreground: 240 10% 45%;
 
-    --destructive: 0 70% 60%;
+    --destructive: 0 85% 65%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 205 30% 88%;
-    --input: 205 30% 88%;
-    --ring: 205 47% 76%;
+    --border: 45 40% 85%;
+    --input: 45 40% 85%;
+    --ring: 195 85% 55%;
 
     --radius: 1rem;
 
-    /* Gradientes suaves */
-    --gradient-calm: linear-gradient(135deg, hsl(188, 52%, 56%), hsl(160, 45%, 86%));
-    --gradient-hero: linear-gradient(135deg, hsl(160, 45%, 86%) 0%, hsl(265, 100%, 83%) 50%, hsl(12, 100%, 83%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(160, 45%, 96%));
-    --gradient-primary: linear-gradient(135deg, hsl(188, 52%, 56%), hsl(160, 45%, 86%));
+    /* Gradientes vibrantes */
+    --gradient-calm: linear-gradient(135deg, hsl(195, 85%, 55%), hsl(160, 70%, 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(270, 80%, 70%) 0%, hsl(195, 85%, 55%) 50%, hsl(15, 100%, 70%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(45, 100%, 95%));
+    --gradient-primary: linear-gradient(135deg, hsl(195, 85%, 55%), hsl(270, 80%, 70%));
 
-    /* Sombras suaves */
-    --shadow-soft: 0 4px 20px -2px hsl(205, 47%, 76%, 0.15);
-    --shadow-card: 0 8px 30px -5px hsl(205, 47%, 76%, 0.2);
-    --shadow-glow: 0 0 40px hsl(205, 47%, 76%, 0.3);
-    --shadow-elegant: 0 10px 30px -10px hsl(205, 47%, 76%, 0.3);
+    /* Sombras coloridas */
+    --shadow-soft: 0 4px 20px -2px hsl(195, 85%, 55%, 0.2);
+    --shadow-card: 0 8px 30px -5px hsl(195, 85%, 55%, 0.25);
+    --shadow-glow: 0 0 40px hsl(270, 80%, 70%, 0.4);
+    --shadow-elegant: 0 10px 30px -10px hsl(195, 85%, 55%, 0.35);
 
     /* Transiciones */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
