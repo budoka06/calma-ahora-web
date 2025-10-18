@@ -26,7 +26,7 @@ const About = () => {
       icon: Sparkles,
       title: 'Numerología simbólica',
       description: 'Personalización basada en tu perfil, sin enfoque esotérico sino de autoconocimiento',
-      action: () => navigate('/registro'),
+      action: () => navigate('/numerologia'),
       colorClass: 'text-accent',
       bgClass: 'bg-accent/20'
     }

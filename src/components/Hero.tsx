@@ -1,11 +1,53 @@
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Play } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Play, User, LogIn } from "lucide-react";
 import heroImage from "@/assets/hero-calma.jpg";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero">
+      {/* Auth buttons */}
+      <div className="absolute top-6 right-6 z-20">
+        {user ? (
+          <Button
+            onClick={() => navigate('/perfil')}
+            variant="outline"
+            size="sm"
+            className="bg-white/80 backdrop-blur-sm"
+          >
+            <User className="mr-2 h-4 w-4" />
+            Mi Perfil
+          </Button>
+        ) : (
+          <Button
+            onClick={() => navigate('/auth')}
+            variant="outline"
+            size="sm"
+            className="bg-white/80 backdrop-blur-sm"
+          >
+            <LogIn className="mr-2 h-4 w-4" />
+            Iniciar Sesión
+          </Button>
+        )}
+      </div>
+
       {/* Animated background circles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-float"></div>
