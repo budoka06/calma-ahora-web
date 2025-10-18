@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts/AppContext';
 import BackButton from '@/components/BackButton';
+import { Volume2, VolumeX } from 'lucide-react';
 
 const obtenerInstrucciones = (tecnica: string) => {
   switch (tecnica) {
@@ -108,9 +109,49 @@ const RespiracionGuiada = () => {
   const { tecnicaElegida, perfilNumerologico } = useAppContext();
   const [fase, setFase] = useState(0);
   const [escala, setEscala] = useState(1);
+  const [audioMuted, setAudioMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   
   const instrucciones = obtenerInstrucciones(tecnicaElegida);
   const mensajePersonalizado = obtenerMensajePersonalizado(perfilNumerologico);
+
+  // Inicializar música de fondo
+  useEffect(() => {
+    const musicUrl = 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3';
+    
+    audioRef.current = new Audio(musicUrl);
+    audioRef.current.loop = true;
+    audioRef.current.volume = 0.3;
+    
+    // Fade in
+    audioRef.current.volume = 0;
+    audioRef.current.play().catch(error => {
+      console.log('Autoplay prevented:', error);
+    });
+    
+    let fadeIn = setInterval(() => {
+      if (audioRef.current && audioRef.current.volume < 0.3) {
+        audioRef.current.volume = Math.min(0.3, audioRef.current.volume + 0.05);
+      } else {
+        clearInterval(fadeIn);
+      }
+    }, 100);
+
+    return () => {
+      clearInterval(fadeIn);
+      if (audioRef.current) {
+        const fadeOut = setInterval(() => {
+          if (audioRef.current && audioRef.current.volume > 0.05) {
+            audioRef.current.volume = Math.max(0, audioRef.current.volume - 0.05);
+          } else {
+            clearInterval(fadeOut);
+            audioRef.current?.pause();
+            audioRef.current = null;
+          }
+        }, 100);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const instrucciones = obtenerInstrucciones(tecnicaElegida);
@@ -136,6 +177,13 @@ const RespiracionGuiada = () => {
     }
   }, [fase, tecnicaElegida]);
 
+  const toggleAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !audioMuted;
+      setAudioMuted(!audioMuted);
+    }
+  };
+
   const handleFinalizar = () => {
     navigate('/feedback');
   };
@@ -143,6 +191,17 @@ const RespiracionGuiada = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4 flex items-center justify-center">
       <BackButton />
+      
+      <Button
+        onClick={toggleAudio}
+        variant="ghost"
+        size="icon"
+        className="fixed top-4 right-4 z-40 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full shadow-md"
+        aria-label={audioMuted ? "Activar audio" : "Silenciar audio"}
+      >
+        {audioMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+      </Button>
+
       <div className="max-w-2xl w-full space-y-8 animate-fade-in">
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold text-calma-ocean">{instrucciones.titulo}</h1>
