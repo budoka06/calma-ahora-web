@@ -15,6 +15,7 @@ import RespiracionSOS from "./pages/RespiracionSOS";
 import FeedbackEmocional from "./pages/FeedbackEmocional";
 import BitacoraEmocional from "./pages/BitacoraEmocional";
 import ChatEmpatico from "./pages/ChatEmpatico";
+import MeditacionGuiada from "./pages/MeditacionGuiada";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/selector-respiracion" element={<SelectorRespiracion />} />
             <Route path="/respiracion-guiada" element={<RespiracionGuiada />} />
             <Route path="/respiracion-sos" element={<RespiracionSOS />} />
+            <Route path="/meditacion" element={<MeditacionGuiada />} />
             <Route path="/feedback" element={<FeedbackEmocional />} />
             <Route path="/bitacora" element={<BitacoraEmocional />} />
             <Route path="/chat" element={<ChatEmpatico />} />

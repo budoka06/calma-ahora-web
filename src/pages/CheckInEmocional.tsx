@@ -39,21 +39,7 @@ const CheckInEmocional = () => {
     }
     
     setContextoEmocional(contexto);
-    
-    // Seleccionar técnica basada en el estado emocional
-    let tecnica = '';
-    if (emocionInicial === 'ansioso') {
-      tecnica = 'Respiración 4-7-8'; // Para ansiedad y tensión
-    } else if (emocionInicial === 'enojado') {
-      tecnica = 'Respiración Coherente (5-5)'; // Para equilibrio emocional
-    } else if (emocionInicial === 'triste') {
-      tecnica = 'Respiración 4-6'; // Para activar nervio vago
-    } else {
-      tecnica = 'Respiración Coherente (5-5)'; // Para mantener calma
-    }
-    
-    setTecnicaElegida(tecnica);
-    navigate('/respiracion-guiada');
+    navigate('/meditacion');
   };
 
   const handleSOS = () => {
