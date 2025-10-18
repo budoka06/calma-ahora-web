@@ -117,18 +117,34 @@ const RespiracionGuiada = () => {
 
   // Música de fondo por técnica
   useEffect(() => {
-    // Librería base (relajante, libre de derechos)
-    const baseUrl = 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3';
-
-    const musicMap: Record<string, { url: string; volume: number; rate: number }> = {
-      'Respiración 4-6': { url: baseUrl, volume: 0.28, rate: 1.0 },
-      'Respiración Cuadrada': { url: baseUrl, volume: 0.24, rate: 0.95 },
-      'Respiración 4-7-8': { url: baseUrl, volume: 0.2, rate: 0.9 },
-      'Respiración Coherente (5-5)': { url: baseUrl, volume: 0.26, rate: 1.0 },
-      'Suspiro Fisiológico': { url: baseUrl, volume: 0.3, rate: 1.05 },
+    // Diferentes pistas de música relajante (libre de derechos de Pixabay)
+    const musicMap: Record<string, { url: string; volume: number }> = {
+      'Respiración 4-6': { 
+        url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3', // Calma general
+        volume: 0.25 
+      },
+      'Respiración Cuadrada': { 
+        url: 'https://cdn.pixabay.com/audio/2024/08/12/audio_8fc4b27dc4.mp3', // Meditación profunda
+        volume: 0.22 
+      },
+      'Respiración 4-7-8': { 
+        url: 'https://cdn.pixabay.com/audio/2022/10/25/audio_3281b0a53e.mp3', // Sueño profundo
+        volume: 0.20 
+      },
+      'Respiración Coherente (5-5)': { 
+        url: 'https://cdn.pixabay.com/audio/2023/02/28/audio_c7bc8c2e55.mp3', // Equilibrio
+        volume: 0.24 
+      },
+      'Suspiro Fisiológico': { 
+        url: 'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3', // Alivio rápido
+        volume: 0.26 
+      },
     };
 
-    const cfg = musicMap[tecnicaElegida] || { url: baseUrl, volume: 0.26, rate: 1.0 };
+    const cfg = musicMap[tecnicaElegida] || { 
+      url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3', 
+      volume: 0.25 
+    };
 
     // Detener cualquier pista anterior
     if (audioRef.current) {
@@ -139,7 +155,6 @@ const RespiracionGuiada = () => {
     const audio = new Audio(cfg.url);
     audioRef.current = audio;
     audio.loop = true;
-    audio.playbackRate = cfg.rate;
 
     // Fade in
     audio.volume = 0;
@@ -147,7 +162,7 @@ const RespiracionGuiada = () => {
       console.log('Autoplay prevented:', error);
     });
 
-    const step = 0.05;
+    const step = 0.04;
     const target = cfg.volume;
     let fadeIn = setInterval(() => {
       if (!audioRef.current) return clearInterval(fadeIn);
@@ -156,14 +171,14 @@ const RespiracionGuiada = () => {
       } else {
         clearInterval(fadeIn);
       }
-    }, 120);
+    }, 100);
 
     return () => {
       clearInterval(fadeIn);
       if (audioRef.current) {
         const fadeOut = setInterval(() => {
           if (!audioRef.current) return clearInterval(fadeOut);
-          if (audio.volume > 0.05) {
+          if (audio.volume > 0.04) {
             audio.volume = Math.max(0, audio.volume - step);
           } else {
             clearInterval(fadeOut);
@@ -172,7 +187,7 @@ const RespiracionGuiada = () => {
               audioRef.current = null;
             }
           }
-        }, 120);
+        }, 100);
       }
     };
   }, [tecnicaElegida]);
