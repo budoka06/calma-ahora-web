@@ -184,15 +184,22 @@ const MeditacionGuiada = () => {
     }
   };
 
-  const siguientePaso = () => {
-    if (pasoActual < config.pasos.length - 1) {
-      const siguiente = pasoActual + 1;
-      setPasoActual(siguiente);
-      narrarPaso(siguiente);
-    } else {
-      finalizarMeditacion();
-    }
-  };
+  // Avance automático de pasos cada 8 segundos
+  useEffect(() => {
+    if (!iniciada || finalizada) return;
+
+    const timer = setTimeout(() => {
+      if (pasoActual < config.pasos.length - 1) {
+        const siguiente = pasoActual + 1;
+        setPasoActual(siguiente);
+        narrarPaso(siguiente);
+      } else {
+        finalizarMeditacion();
+      }
+    }, 8000);
+
+    return () => clearTimeout(timer);
+  }, [pasoActual, iniciada, finalizada]);
 
   const finalizarMeditacion = () => {
     setFinalizada(true);
@@ -367,17 +374,9 @@ const MeditacionGuiada = () => {
             <h2 className="text-2xl font-semibold text-calma-ocean px-4 min-h-[80px] flex items-center justify-center">
               {config.pasos[pasoActual]}
             </h2>
-          </div>
-
-          {/* Botón siguiente paso */}
-          <div className="pt-4">
-            <Button
-              onClick={siguientePaso}
-              size="lg"
-              className="w-full h-14 text-lg"
-            >
-              {pasoActual < config.pasos.length - 1 ? 'Siguiente Paso' : 'Finalizar'}
-            </Button>
+            <p className="text-xs text-calma-ocean/40 italic pt-2">
+              Avance automático en 8 segundos...
+            </p>
           </div>
         </div>
       </div>
