@@ -8,102 +8,117 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* CalmaAhora Brand Colors - Arcoíris de bienestar */
-    --background: 50 100% 97%; /* Amarillo muy claro brillante */
-    --foreground: 240 15% 25%; /* Gris azulado para texto */
+    /* CalmaAhora - Paleta luminosa de calma activa y optimismo */
+    --background: 30 100% 97%; /* Crema claro cálido #FFF9F3 */
+    --foreground: 0 0% 27%; /* Gris cálido para texto #444444 */
 
-    /* Paleta extendida de colores vibrantes */
-    --calma-ocean: 195 85% 55%; /* Azul cielo vibrante */
-    --calma-mint: 160 70% 65%; /* Verde menta brillante */
-    --calma-lavender: 270 80% 70%; /* Lavanda vibrante */
-    --calma-coral: 15 100% 70%; /* Coral brillante */
-    --calma-sand: 45 100% 88%; /* Amarillo cálido suave */
-    --calma-rose: 340 85% 70%; /* Rosa fucsia */
-    --calma-lime: 85 80% 60%; /* Lima energizante */
-    --calma-turquoise: 180 75% 60%; /* Turquesa brillante */
-    --calma-peach: 25 100% 75%; /* Durazno suave */
-    --calma-purple: 280 70% 65%; /* Púrpura vibrante */
-    --calma-sky: 200 90% 65%; /* Cielo brillante */
-    --calma-sunshine: 50 100% 65%; /* Sol radiante */
+    /* Paleta emocional principal */
+    --calma-sky: 200 75% 64%; /* Azul cielo brillante #5AB9EA - calma, claridad */
+    --calma-mint: 142 60% 71%; /* Verde menta luminoso #88E0A3 - equilibrio, frescura */
+    --calma-sunshine: 48 100% 67%; /* Amarillo suave energético #FFE156 - optimismo */
+    --calma-coral: 8 100% 71%; /* Coral cálido #FF7F6B - empatía, calidez */
+    --calma-success: 132 60% 65%; /* Verde esperanza #6EDC82 - motivación */
+    --calma-warning: 28 100% 68%; /* Naranja amable #FFA45B - advertencia suave */
+    
+    /* Colores complementarios para numerología */
+    --calma-lavender: 270 65% 75%; /* Lavanda introspección */
+    --calma-turquoise: 175 60% 65%; /* Turquesa movimiento */
+    --calma-peach: 20 100% 78%; /* Durazno creatividad */
+    --calma-rose: 340 75% 75%; /* Rosa calidez */
+    --calma-lime: 85 70% 65%; /* Lima vitalidad */
+    --calma-gold: 45 100% 60%; /* Dorado inspiración */
 
-    --card: 0 0% 100%; /* Blanco puro para cards */
-    --card-foreground: 240 15% 25%;
+    --card: 0 0% 100%; /* Blanco cálido para cards */
+    --card-foreground: 0 0% 27%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 15% 25%;
+    --popover: 30 100% 97%;
+    --popover-foreground: 0 0% 27%;
 
-    /* Azul cielo vibrante como color principal */
-    --primary: 195 85% 55%; /* Azul brillante */
+    /* Azul cielo brillante - primario */
+    --primary: 200 75% 64%; /* #5AB9EA */
     --primary-foreground: 0 0% 100%;
+    --primary-hover: 200 75% 74%; /* Más claro al hover #82D1F0 */
 
-    /* Rosa fucsia como secundario */
-    --secondary: 340 85% 70%; /* Rosa vibrante */
+    /* Verde menta luminoso - secundario */
+    --secondary: 142 60% 71%; /* #88E0A3 */
     --secondary-foreground: 0 0% 100%;
 
-    /* Verde lima para acentos */
-    --accent: 85 80% 60%; /* Lima energizante */
-    --accent-foreground: 0 0% 100%;
+    /* Amarillo energético - acento */
+    --accent: 48 100% 67%; /* #FFE156 */
+    --accent-foreground: 0 0% 27%;
 
-    --muted: 50 60% 92%;
-    --muted-foreground: 240 10% 45%;
+    /* Coral cálido - acento secundario */
+    --accent-coral: 8 100% 71%; /* #FF7F6B */
+    --accent-coral-foreground: 0 0% 100%;
 
-    --destructive: 0 85% 65%;
+    --muted: 30 40% 92%;
+    --muted-foreground: 0 0% 44%; /* Gris medio #707070 */
+
+    /* Verde éxito brillante */
+    --success: 132 60% 65%; /* #6EDC82 */
+    --success-foreground: 0 0% 100%;
+
+    /* Naranja advertencia amable */
+    --destructive: 28 100% 68%; /* #FFA45B */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 50 40% 85%;
-    --input: 50 40% 85%;
-    --ring: 195 85% 55%;
+    --border: 0 0% 91%; /* #E8E8E8 */
+    --input: 30 40% 94%;
+    --ring: 200 75% 64%;
 
     --radius: 1rem;
 
-    /* Gradientes multicolor vibrantes */
-    --gradient-calm: linear-gradient(135deg, hsl(195, 85%, 55%), hsl(160, 70%, 65%), hsl(85, 80%, 60%));
-    --gradient-hero: linear-gradient(135deg, hsl(340, 85%, 70%) 0%, hsl(270, 80%, 70%) 25%, hsl(195, 85%, 55%) 50%, hsl(160, 70%, 65%) 75%, hsl(50, 100%, 65%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(340, 85%, 95%), hsl(195, 85%, 95%));
-    --gradient-primary: linear-gradient(135deg, hsl(195, 85%, 55%), hsl(270, 80%, 70%), hsl(340, 85%, 70%));
-    --gradient-joy: linear-gradient(135deg, hsl(50, 100%, 65%), hsl(25, 100%, 75%), hsl(15, 100%, 70%));
-    --gradient-peace: linear-gradient(135deg, hsl(180, 75%, 60%), hsl(160, 70%, 65%), hsl(85, 80%, 60%));
-    --gradient-energy: linear-gradient(135deg, hsl(340, 85%, 70%), hsl(15, 100%, 70%), hsl(50, 100%, 65%));
+    /* Gradientes luminosos y naturales */
+    --gradient-calm: linear-gradient(135deg, hsl(200, 75%, 64%), hsl(142, 60%, 71%));
+    --gradient-hero: linear-gradient(135deg, hsl(48, 100%, 67%) 0%, hsl(8, 100%, 71%) 30%, hsl(200, 75%, 64%) 60%, hsl(142, 60%, 71%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(30, 100%, 98%));
+    --gradient-primary: linear-gradient(135deg, hsl(200, 75%, 64%), hsl(175, 60%, 65%));
+    --gradient-joy: linear-gradient(135deg, hsl(48, 100%, 67%), hsl(28, 100%, 68%));
+    --gradient-peace: linear-gradient(135deg, hsl(142, 60%, 71%), hsl(175, 60%, 65%));
+    --gradient-energy: linear-gradient(135deg, hsl(8, 100%, 71%), hsl(48, 100%, 67%));
+    --gradient-breathing: linear-gradient(180deg, hsl(200, 75%, 64%), hsl(142, 60%, 71%));
 
-    /* Sombras coloridas y vibrantes */
-    --shadow-soft: 0 4px 20px -2px hsl(195, 85%, 55%, 0.25);
-    --shadow-card: 0 8px 30px -5px hsl(270, 80%, 70%, 0.3);
-    --shadow-glow: 0 0 40px hsl(340, 85%, 70%, 0.4);
-    --shadow-elegant: 0 10px 30px -10px hsl(195, 85%, 55%, 0.4);
-    --shadow-vibrant: 0 0 50px hsl(85, 80%, 60%, 0.35);
+    /* Sombras suaves y luminosas */
+    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    --shadow-card: 0 8px 30px -5px rgba(90, 185, 234, 0.15);
+    --shadow-glow: 0 0 40px rgba(90, 185, 234, 0.2);
+    --shadow-elegant: 0 10px 30px -10px rgba(90, 185, 234, 0.3);
+    --shadow-vibrant: 0 0 50px rgba(136, 224, 163, 0.25);
+    --shadow-button: 0 4px 12px rgba(90, 185, 234, 0.3);
 
     /* Transiciones */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
-    --background: 215 30% 12%;
-    --foreground: 42 71% 96%;
+    /* Modo claro alternativo - sin oscuridad */
+    --background: 45 80% 95%;
+    --foreground: 0 0% 27%;
 
-    --card: 215 28% 15%;
-    --card-foreground: 42 71% 96%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 27%;
 
-    --popover: 215 28% 15%;
-    --popover-foreground: 42 71% 96%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 27%;
 
-    --primary: 205 47% 65%;
-    --primary-foreground: 215 30% 12%;
+    --primary: 200 75% 60%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 159 35% 45%;
-    --secondary-foreground: 215 30% 12%;
+    --secondary: 142 60% 65%;
+    --secondary-foreground: 0 0% 100%;
 
-    --accent: 282 30% 60%;
-    --accent-foreground: 215 30% 12%;
+    --accent: 48 100% 62%;
+    --accent-foreground: 0 0% 27%;
 
-    --muted: 215 25% 20%;
-    --muted-foreground: 215 15% 60%;
+    --muted: 30 30% 88%;
+    --muted-foreground: 0 0% 44%;
 
-    --destructive: 0 70% 50%;
+    --destructive: 28 100% 62%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 25% 25%;
-    --input: 215 25% 25%;
-    --ring: 205 47% 65%;
+    --border: 0 0% 88%;
+    --input: 30 40% 90%;
+    --ring: 200 75% 60%;
   }
 }
 

@@ -23,22 +23,23 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         calma: {
-          ocean: "hsl(var(--calma-ocean))",
           sky: "hsl(var(--calma-sky))",
           mint: "hsl(var(--calma-mint))",
-          lavender: "hsl(var(--calma-lavender))",
-          sand: "hsl(var(--calma-sand))",
-          rose: "hsl(var(--calma-rose))",
-          lime: "hsl(var(--calma-lime))",
-          turquoise: "hsl(var(--calma-turquoise))",
-          peach: "hsl(var(--calma-peach))",
-          purple: "hsl(var(--calma-purple))",
           sunshine: "hsl(var(--calma-sunshine))",
           coral: "hsl(var(--calma-coral))",
+          success: "hsl(var(--calma-success))",
+          warning: "hsl(var(--calma-warning))",
+          lavender: "hsl(var(--calma-lavender))",
+          turquoise: "hsl(var(--calma-turquoise))",
+          peach: "hsl(var(--calma-peach))",
+          rose: "hsl(var(--calma-rose))",
+          lime: "hsl(var(--calma-lime))",
+          gold: "hsl(var(--calma-gold))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -48,6 +49,10 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -55,6 +60,8 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          coral: "hsl(var(--accent-coral))",
+          "coral-foreground": "hsl(var(--accent-coral-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -73,6 +80,7 @@ export default {
         'gradient-joy': 'var(--gradient-joy)',
         'gradient-peace': 'var(--gradient-peace)',
         'gradient-energy': 'var(--gradient-energy)',
+        'gradient-breathing': 'var(--gradient-breathing)',
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
@@ -80,6 +88,7 @@ export default {
         'glow': 'var(--shadow-glow)',
         'elegant': 'var(--shadow-elegant)',
         'vibrant': 'var(--shadow-vibrant)',
+        'button': 'var(--shadow-button)',
       },
       borderRadius: {
         lg: "var(--radius)",
