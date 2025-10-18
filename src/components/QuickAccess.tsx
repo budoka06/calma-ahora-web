@@ -11,7 +11,7 @@ const QuickAccess = () => {
       icon: Wind,
       title: 'Respiración Guiada',
       description: 'Técnicas personalizadas para regular tus emociones',
-      action: () => navigate('/check-in'),
+      action: () => navigate('/selector-respiracion'),
       gradient: 'from-calma-mint to-calma-ocean'
     },
     {

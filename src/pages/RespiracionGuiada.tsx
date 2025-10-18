@@ -6,39 +6,83 @@ import { Home } from 'lucide-react';
 
 const obtenerInstrucciones = (tecnica: string) => {
   switch (tecnica) {
+    case 'Respiración 4-6':
+      return {
+        titulo: 'Respiración 4-6',
+        descripcion: 'Activa el nervio vago y relaja el cuerpo rápidamente. Ideal para ansiedad leve o nervios momentáneos.',
+        pasos: [
+          'Inhala por la nariz contando hasta 4',
+          'Exhala por la boca contando hasta 6',
+          'No hagas pausas entre inhalación y exhalación',
+          'Repite el ciclo sintiendo cómo tu cuerpo se relaja'
+        ],
+        duraciones: [4, 6],
+        tiempoCiclo: 10000
+      };
+    case 'Respiración Cuadrada':
+      return {
+        titulo: 'Respiración Cuadrada (Box Breathing)',
+        descripcion: 'Estabiliza mente y cuerpo, genera enfoque y control. Ideal para crisis de ansiedad o pensamientos acelerados.',
+        pasos: [
+          'Inhala por la nariz contando hasta 4',
+          'Retén el aire contando hasta 4',
+          'Exhala por la boca contando hasta 4',
+          'Mantén vacío contando hasta 4',
+          'Repite el ciclo completo'
+        ],
+        duraciones: [4, 4, 4, 4],
+        tiempoCiclo: 16000
+      };
     case 'Respiración 4-7-8':
       return {
         titulo: 'Respiración 4-7-8',
-        descripcion: 'Ideal para reducir la ansiedad y encontrar calma rápidamente.',
+        descripcion: 'Profunda sedación del sistema nervioso. Ideal para momentos de mucha tensión o insomnio.',
         pasos: [
-          'Inhala lentamente por la nariz mientras cuentas hasta 4',
-          'Mantén el aire en tus pulmones contando hasta 7',
-          'Exhala suavemente por la boca contando hasta 8',
-          'Repite este ciclo varias veces hasta sentir calma'
+          'Inhala por la nariz contando hasta 4',
+          'Retén el aire contando hasta 7',
+          'Exhala por la boca contando hasta 8',
+          'Repite el ciclo hasta sentir calma profunda'
         ],
-        duraciones: [4, 7, 8]
+        duraciones: [4, 7, 8],
+        tiempoCiclo: 19000
       };
-    case 'Respiración 4-4':
+    case 'Respiración Coherente (5-5)':
       return {
-        titulo: 'Respiración 4-4',
-        descripcion: 'Perfecta para liberar tensiones y emociones intensas.',
+        titulo: 'Respiración Coherente (5-5)',
+        descripcion: 'Sincroniza corazón y respiración, crea equilibrio emocional. Ideal para práctica diaria o estados de estrés constante.',
         pasos: [
-          'Inhala profundamente por la nariz contando 1-2-3-4',
-          'Exhala suavemente por la boca contando 1-2-3-4',
-          'Repite este ciclo sintiendo cómo la tensión se libera'
+          'Inhala suavemente por la nariz contando hasta 5',
+          'Exhala lentamente por la boca contando hasta 5',
+          'Mantén un ritmo constante y suave',
+          'Repite sintiendo el equilibrio en tu cuerpo'
         ],
-        duraciones: [4, 4]
+        duraciones: [5, 5],
+        tiempoCiclo: 10000
+      };
+    case 'Suspiro Fisiológico':
+      return {
+        titulo: 'Suspiro Fisiológico Doble (Stanford)',
+        descripcion: 'Libera CO₂ y baja ansiedad en menos de un minuto. Ideal cuando hay sensación de ahogo o presión torácica.',
+        pasos: [
+          'Haz una inhalación corta por la nariz',
+          'Inmediatamente haz otra inhalación corta',
+          'Exhala lentamente y completamente por la boca',
+          'Repite 2-3 veces para alivio inmediato'
+        ],
+        duraciones: [1, 1, 6],
+        tiempoCiclo: 8000
       };
     default:
       return {
-        titulo: 'Respiración Suave',
-        descripcion: 'Mantén y profundiza tu estado de calma.',
+        titulo: 'Respiración Coherente (5-5)',
+        descripcion: 'Sincroniza corazón y respiración, crea equilibrio emocional.',
         pasos: [
-          'Inhala suavemente por la nariz durante 5 segundos',
-          'Exhala lentamente por la boca durante 5 segundos',
+          'Inhala suavemente por la nariz contando hasta 5',
+          'Exhala lentamente por la boca contando hasta 5',
           'Repite este ciclo sintiendo la paz en cada respiración'
         ],
-        duraciones: [5, 5]
+        duraciones: [5, 5],
+        tiempoCiclo: 10000
       };
   }
 };
@@ -69,28 +113,26 @@ const RespiracionGuiada = () => {
   const mensajePersonalizado = obtenerMensajePersonalizado(perfilNumerologico);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    const instrucciones = obtenerInstrucciones(tecnicaElegida);
+    const numFases = instrucciones.duraciones.length;
     
-    if (tecnicaElegida === 'Respiración 4-7-8') {
-      interval = setInterval(() => {
-        setFase((prev) => (prev + 1) % 3);
-      }, 6333);
-    } else {
-      interval = setInterval(() => {
-        setFase((prev) => (prev + 1) % 2);
-      }, 4000);
-    }
+    const interval = setInterval(() => {
+      setFase((prev) => (prev + 1) % numFases);
+    }, instrucciones.tiempoCiclo / numFases);
 
     return () => clearInterval(interval);
   }, [tecnicaElegida]);
 
   useEffect(() => {
-    if (fase === 0) {
-      setEscala(1.5);
-    } else if (fase === 1 && tecnicaElegida === 'Respiración 4-7-8') {
-      setEscala(1.5);
+    const instrucciones = obtenerInstrucciones(tecnicaElegida);
+    const duraciones = instrucciones.duraciones;
+    
+    // Determine scale based on breathing phase
+    // Even phases (0, 2, 4...) are typically inhale/hold, odd phases are exhale
+    if (fase === 0 || (duraciones.length === 4 && (fase === 0 || fase === 1))) {
+      setEscala(1.5); // Expand on inhale/hold
     } else {
-      setEscala(1);
+      setEscala(1); // Contract on exhale
     }
   }, [fase, tecnicaElegida]);
 

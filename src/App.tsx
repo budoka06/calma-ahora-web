@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import RegistroUsuario from "./pages/RegistroUsuario";
 import CheckInEmocional from "./pages/CheckInEmocional";
+import SelectorRespiracion from "./pages/SelectorRespiracion";
 import RespiracionGuiada from "./pages/RespiracionGuiada";
 import RespiracionSOS from "./pages/RespiracionSOS";
 import FeedbackEmocional from "./pages/FeedbackEmocional";
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/registro" element={<RegistroUsuario />} />
             <Route path="/check-in" element={<CheckInEmocional />} />
+            <Route path="/selector-respiracion" element={<SelectorRespiracion />} />
             <Route path="/respiracion-guiada" element={<RespiracionGuiada />} />
             <Route path="/respiracion-sos" element={<RespiracionSOS />} />
             <Route path="/feedback" element={<FeedbackEmocional />} />

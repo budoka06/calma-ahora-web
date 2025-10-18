@@ -39,13 +39,16 @@ const CheckInEmocional = () => {
     
     setContextoEmocional(contexto);
     
+    // Seleccionar técnica basada en el estado emocional
     let tecnica = '';
     if (emocionInicial === 'ansioso') {
-      tecnica = 'Respiración 4-7-8';
-    } else if (emocionInicial === 'enojado' || emocionInicial === 'triste') {
-      tecnica = 'Respiración 4-4';
+      tecnica = 'Respiración 4-7-8'; // Para ansiedad y tensión
+    } else if (emocionInicial === 'enojado') {
+      tecnica = 'Respiración Coherente (5-5)'; // Para equilibrio emocional
+    } else if (emocionInicial === 'triste') {
+      tecnica = 'Respiración 4-6'; // Para activar nervio vago
     } else {
-      tecnica = 'Respiración Suave';
+      tecnica = 'Respiración Coherente (5-5)'; // Para mantener calma
     }
     
     setTecnicaElegida(tecnica);
@@ -54,7 +57,7 @@ const CheckInEmocional = () => {
 
   const handleSOS = () => {
     setContextoEmocional(contexto);
-    setTecnicaElegida('Respiración Cuadrada (SOS)');
+    setTecnicaElegida('Respiración Cuadrada');
     navigate('/respiracion-sos');
   };
 
