@@ -14,7 +14,131 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      numerology_archetypes: {
+        Row: {
+          affirmation: string
+          breathing: string
+          challenges: string | null
+          extras: Json | null
+          id: string
+          strengths: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          affirmation: string
+          breathing: string
+          challenges?: string | null
+          extras?: Json | null
+          id: string
+          strengths?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          affirmation?: string
+          breathing?: string
+          challenges?: string | null
+          extras?: Json | null
+          id?: string
+          strengths?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      numerology_reports: {
+        Row: {
+          created_at: string | null
+          dob: string
+          expression_number: string
+          full_name: string
+          id: string
+          life_path: string
+          personal_year: string
+          personality: string
+          raw_calc: Json | null
+          recommendations: Json | null
+          soul_urge: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          dob: string
+          expression_number: string
+          full_name: string
+          id?: string
+          life_path: string
+          personal_year: string
+          personality: string
+          raw_calc?: Json | null
+          recommendations?: Json | null
+          soul_urge: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          dob?: string
+          expression_number?: string
+          full_name?: string
+          id?: string
+          life_path?: string
+          personal_year?: string
+          personality?: string
+          raw_calc?: Json | null
+          recommendations?: Json | null
+          soul_urge?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "numerology_reports_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          auth_provider: string | null
+          created_at: string | null
+          data_consent: boolean | null
+          display_name: string | null
+          dob: string | null
+          email: string
+          id: string
+          photo_url: string | null
+          time_zone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          auth_provider?: string | null
+          created_at?: string | null
+          data_consent?: boolean | null
+          display_name?: string | null
+          dob?: string | null
+          email: string
+          id: string
+          photo_url?: string | null
+          time_zone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          auth_provider?: string | null
+          created_at?: string | null
+          data_consent?: boolean | null
+          display_name?: string | null
+          dob?: string | null
+          email?: string
+          id?: string
+          photo_url?: string | null
+          time_zone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
