@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts/AppContext';
 import BackButton from '@/components/BackButton';
 import { Volume2, VolumeX } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface MeditacionConfig {
   titulo: string;
@@ -87,8 +88,9 @@ const MeditacionGuiada = () => {
   const [finalizada, setFinalizada] = useState(false);
   const [escala, setEscala] = useState(1);
   const [audioMuted, setAudioMuted] = useState(false);
+  const [isNarrating, setIsNarrating] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const synthRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
   const config = configuracionesMeditacion[emocionInicial] || configuracionesMeditacion.tranquilo;
 
@@ -130,42 +132,55 @@ const MeditacionGuiada = () => {
     setTimeout(() => narrarPaso(0), 500);
   };
 
-  const narrarPaso = (index: number) => {
-    if ('speechSynthesis' in window) {
-      // Cancelar narración anterior si existe
-      window.speechSynthesis.cancel();
+  const narrarPaso = async (index: number) => {
+    // Detener narración anterior si existe
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+
+    setIsNarrating(true);
+    
+    try {
+      console.log('Generating speech for step:', index, config.pasos[index]);
       
-      const utterance = new SpeechSynthesisUtterance(config.pasos[index]);
-      utterance.lang = 'es-ES';
-      
-      // Buscar la mejor voz en español disponible
-      const voices = window.speechSynthesis.getVoices();
-      const spanishVoices = voices.filter(voice => 
-        voice.lang.includes('es') && 
-        (voice.name.includes('Google') || voice.name.includes('Microsoft') || voice.name.includes('Natural'))
-      );
-      
-      // Preferir voces femeninas para meditación (más cálidas)
-      const femaleVoice = spanishVoices.find(voice => 
-        voice.name.toLowerCase().includes('female') || 
-        voice.name.toLowerCase().includes('mujer') ||
-        voice.name.toLowerCase().includes('lucia') ||
-        voice.name.toLowerCase().includes('monica')
-      );
-      
-      if (femaleVoice) {
-        utterance.voice = femaleVoice;
-      } else if (spanishVoices.length > 0) {
-        utterance.voice = spanishVoices[0];
+      const { data, error } = await supabase.functions.invoke('text-to-speech', {
+        body: { 
+          text: config.pasos[index],
+          emotion: emocionInicial 
+        }
+      });
+
+      if (error) {
+        console.error('Error generating speech:', error);
+        throw error;
       }
-      
-      // Parámetros más naturales para meditación
-      utterance.rate = 0.75; // Más lento para meditación
-      utterance.pitch = 0.95; // Ligeramente más bajo, más cálido
-      utterance.volume = audioMuted ? 0 : 1;
-      
-      synthRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
+
+      if (data?.audioContent) {
+        // Convertir base64 a blob y reproducir
+        const binaryString = atob(data.audioContent);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        const blob = new Blob([bytes], { type: 'audio/mpeg' });
+        const url = URL.createObjectURL(blob);
+        
+        const audio = new Audio(url);
+        audio.volume = audioMuted ? 0 : 1;
+        currentAudioRef.current = audio;
+        
+        audio.onended = () => {
+          setIsNarrating(false);
+          URL.revokeObjectURL(url);
+        };
+        
+        await audio.play();
+        console.log('Playing speech');
+      }
+    } catch (error) {
+      console.error('Error in narration:', error);
+      setIsNarrating(false);
     }
   };
 
@@ -199,14 +214,20 @@ const MeditacionGuiada = () => {
       }, 100);
     }
     
-    // Cancelar narración
-    window.speechSynthesis.cancel();
+    // Detener narración
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
   };
 
   const toggleAudio = () => {
     setAudioMuted(!audioMuted);
     if (audioRef.current) {
       audioRef.current.muted = !audioMuted;
+    }
+    if (currentAudioRef.current) {
+      currentAudioRef.current.volume = !audioMuted ? 1 : 0;
     }
   };
 
@@ -217,7 +238,9 @@ const MeditacionGuiada = () => {
   useEffect(() => {
     return () => {
       // Limpieza al desmontar
-      window.speechSynthesis.cancel();
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+      }
       if (audioRef.current) {
         audioRef.current.pause();
       }
