@@ -117,72 +117,113 @@ const RespiracionGuiada = () => {
 
   // Música de fondo por técnica
   useEffect(() => {
-    // Diferentes pistas de música relajante (libre de derechos de Pixabay)
+    // Pistas verificadas de Pixabay (libre de derechos)
     const musicMap: Record<string, { url: string; volume: number }> = {
       'Respiración 4-6': { 
-        url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3', // Calma general
+        url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_1808fbf07a.mp3',
         volume: 0.25 
       },
       'Respiración Cuadrada': { 
-        url: 'https://cdn.pixabay.com/audio/2024/08/12/audio_8fc4b27dc4.mp3', // Meditación profunda
+        url: 'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3',
         volume: 0.22 
       },
       'Respiración 4-7-8': { 
-        url: 'https://cdn.pixabay.com/audio/2022/10/25/audio_3281b0a53e.mp3', // Sueño profundo
+        url: 'https://cdn.pixabay.com/audio/2023/02/28/audio_c7bc8c2e55.mp3',
         volume: 0.20 
       },
       'Respiración Coherente (5-5)': { 
-        url: 'https://cdn.pixabay.com/audio/2023/02/28/audio_c7bc8c2e55.mp3', // Equilibrio
+        url: 'https://cdn.pixabay.com/audio/2024/02/20/audio_c8cc1a7eaa.mp3',
         volume: 0.24 
       },
       'Suspiro Fisiológico': { 
-        url: 'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3', // Alivio rápido
+        url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_1808fbf07a.mp3',
         volume: 0.26 
       },
     };
 
     const cfg = musicMap[tecnicaElegida] || { 
-      url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3', 
+      url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_1808fbf07a.mp3', 
       volume: 0.25 
     };
 
     // Detener cualquier pista anterior
     if (audioRef.current) {
-      try { audioRef.current.pause(); } catch {}
+      try { 
+        audioRef.current.pause();
+        audioRef.current.src = '';
+      } catch {}
       audioRef.current = null;
     }
 
     const audio = new Audio(cfg.url);
     audioRef.current = audio;
     audio.loop = true;
-
-    // Fade in
     audio.volume = 0;
-    audio.play().catch(error => {
-      console.log('Autoplay prevented:', error);
-    });
 
-    const step = 0.04;
-    const target = cfg.volume;
-    let fadeIn = setInterval(() => {
-      if (!audioRef.current) return clearInterval(fadeIn);
-      if (audio.volume < target - 0.01) {
-        audio.volume = Math.min(target, audio.volume + step);
-      } else {
-        clearInterval(fadeIn);
-      }
-    }, 100);
+    // Intentar reproducir
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log('Audio playing successfully');
+          // Fade in
+          const step = 0.04;
+          const target = cfg.volume;
+          const fadeIn = setInterval(() => {
+            if (!audioRef.current || audioRef.current !== audio) {
+              clearInterval(fadeIn);
+              return;
+            }
+            if (audio.volume < target - 0.01) {
+              audio.volume = Math.min(target, audio.volume + step);
+            } else {
+              clearInterval(fadeIn);
+            }
+          }, 100);
+        })
+        .catch(error => {
+          console.log('Autoplay prevented - user interaction needed:', error);
+          // Intentar reproducir con interacción del usuario
+          const handleInteraction = () => {
+            audio.play().then(() => {
+              console.log('Audio started after user interaction');
+              // Fade in después de la interacción
+              const step = 0.04;
+              const target = cfg.volume;
+              const fadeIn = setInterval(() => {
+                if (!audioRef.current || audioRef.current !== audio) {
+                  clearInterval(fadeIn);
+                  return;
+                }
+                if (audio.volume < target - 0.01) {
+                  audio.volume = Math.min(target, audio.volume + step);
+                } else {
+                  clearInterval(fadeIn);
+                }
+              }, 100);
+            });
+            document.removeEventListener('click', handleInteraction);
+            document.removeEventListener('touchstart', handleInteraction);
+          };
+          document.addEventListener('click', handleInteraction, { once: true });
+          document.addEventListener('touchstart', handleInteraction, { once: true });
+        });
+    }
 
     return () => {
-      clearInterval(fadeIn);
-      if (audioRef.current) {
+      if (audioRef.current && audioRef.current === audio) {
         const fadeOut = setInterval(() => {
-          if (!audioRef.current) return clearInterval(fadeOut);
+          if (!audioRef.current || audioRef.current !== audio) {
+            clearInterval(fadeOut);
+            return;
+          }
           if (audio.volume > 0.04) {
-            audio.volume = Math.max(0, audio.volume - step);
+            audio.volume = Math.max(0, audio.volume - 0.04);
           } else {
             clearInterval(fadeOut);
             audio.pause();
+            audio.src = '';
             if (audioRef.current === audio) {
               audioRef.current = null;
             }
