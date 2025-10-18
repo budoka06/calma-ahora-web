@@ -5,7 +5,7 @@ import { useAppContext } from '@/contexts/AppContext';
 import BackButton from '@/components/BackButton';
 import { Volume2, VolumeX } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-
+import { useToast } from '@/components/ui/use-toast';
 interface MeditacionConfig {
   titulo: string;
   descripcion: string;
@@ -92,6 +92,8 @@ const MeditacionGuiada = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
 
+  const { toast } = useToast();
+
   const config = configuracionesMeditacion[emocionInicial] || configuracionesMeditacion.tranquilo;
 
   useEffect(() => {
@@ -138,6 +140,10 @@ const MeditacionGuiada = () => {
       currentAudioRef.current.pause();
       currentAudioRef.current = null;
     }
+    if ('speechSynthesis' in window) {
+      // Cancelar cualquier síntesis previa
+      window.speechSynthesis.cancel();
+    }
 
     setIsNarrating(true);
     
@@ -175,7 +181,6 @@ const MeditacionGuiada = () => {
           setIsNarrating(false);
           URL.revokeObjectURL(url);
           
-          // Esperar 2 segundos adicionales antes de avanzar al siguiente paso
           setTimeout(() => {
             const siguiente = index + 1;
             if (siguiente < config.pasos.length) {
@@ -189,10 +194,60 @@ const MeditacionGuiada = () => {
         
         await audio.play();
         console.log('Playing speech');
+        return;
       }
+
+      // Si no hubo audio en data, forzar fallback
+      throw new Error('No audio generated');
     } catch (error) {
-      console.error('Error in narration:', error);
+      console.error('Error in narration, using browser SpeechSynthesis fallback if available:', error);
+      // Aviso al usuario
+      try {
+        toast({
+          title: 'Voz no disponible temporalmente',
+          description: 'Usando voz del navegador. Puede variar según tu dispositivo.',
+        });
+      } catch {}
+
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(config.pasos[index]);
+        // Seleccionar una voz en español si existe
+        const voices = window.speechSynthesis.getVoices();
+        const esVoice = voices.find(v => (v.lang || '').toLowerCase().startsWith('es')) || voices[0];
+        if (esVoice) utter.voice = esVoice;
+        utter.lang = esVoice?.lang || 'es-ES';
+        utter.rate = 0.85; // más lento y calmado
+        utter.pitch = 0.9;
+        utter.volume = audioMuted ? 0 : 1;
+
+        utter.onend = () => {
+          setIsNarrating(false);
+          setTimeout(() => {
+            const siguiente = index + 1;
+            if (siguiente < config.pasos.length) {
+              setPasoActual(siguiente);
+              narrarPaso(siguiente);
+            } else {
+              finalizarMeditacion();
+            }
+          }, 2000);
+        };
+
+        window.speechSynthesis.speak(utter);
+        return;
+      }
+
+      // Último fallback: avanzar sin voz tras un tiempo razonable
       setIsNarrating(false);
+      setTimeout(() => {
+        const siguiente = index + 1;
+        if (siguiente < config.pasos.length) {
+          setPasoActual(siguiente);
+          narrarPaso(siguiente);
+        } else {
+          finalizarMeditacion();
+        }
+      }, 8000);
     }
   };
 
@@ -221,8 +276,10 @@ const MeditacionGuiada = () => {
       currentAudioRef.current.pause();
       currentAudioRef.current = null;
     }
+    if ('speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch {}
+    }
   };
-
   const toggleAudio = () => {
     setAudioMuted(!audioMuted);
     if (audioRef.current) {
