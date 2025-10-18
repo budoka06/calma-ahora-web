@@ -12,6 +12,13 @@ All colors MUST be HSL.
     --background: 42 71% 96%; /* Arena muy claro #FAF3E0 */
     --foreground: 215 25% 27%; /* Azul oscuro suave para texto */
 
+    /* Colores específicos de CalmaAhora */
+    --calma-ocean: 215 25% 27%; /* Azul oscuro para texto principal */
+    --calma-sky: 205 47% 90%; /* Azul cielo muy claro */
+    --calma-mint: 159 38% 85%; /* Verde menta muy claro */
+    --calma-lavender: 282 33% 88%; /* Lavanda muy claro */
+    --calma-sand: 42 71% 92%; /* Arena claro */
+
     --card: 0 0% 100%; /* Blanco puro para cards */
     --card-foreground: 215 25% 27%;
 
@@ -46,11 +53,13 @@ All colors MUST be HSL.
     --gradient-calm: linear-gradient(135deg, hsl(205, 47%, 76%), hsl(159, 38%, 80%));
     --gradient-hero: linear-gradient(180deg, hsl(205, 47%, 90%), hsl(42, 71%, 96%));
     --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(205, 47%, 98%));
+    --gradient-primary: linear-gradient(135deg, hsl(205, 47%, 76%), hsl(159, 38%, 80%));
 
     /* Sombras suaves */
     --shadow-soft: 0 4px 20px -2px hsl(205, 47%, 76%, 0.15);
     --shadow-card: 0 8px 30px -5px hsl(205, 47%, 76%, 0.2);
     --shadow-glow: 0 0 40px hsl(205, 47%, 76%, 0.3);
+    --shadow-elegant: 0 10px 30px -10px hsl(205, 47%, 76%, 0.3);
 
     /* Transiciones */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -156,6 +165,15 @@ All colors MUST be HSL.
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .animate-breathe {
   animation: breathe 4s ease-in-out infinite;
 }
@@ -174,6 +192,18 @@ All colors MUST be HSL.
 
 .animate-fade-in-up {
   animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
 }
 
 /* Utilidades de scroll suave */

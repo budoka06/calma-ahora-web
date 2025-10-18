@@ -2,7 +2,7 @@ import { Heart, Brain, Sparkles } from "lucide-react";
 
 const About = () => {
   return (
-    <section className="py-24 bg-card">
+    <section id="about" className="py-24 bg-card">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16 animate-fade-in-up">

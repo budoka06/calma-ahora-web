@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { Download } from "lucide-react";
 import heroImage from "@/assets/hero-calma.jpg";
 
@@ -29,17 +30,20 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 rounded-full shadow-soft hover:shadow-card transition-all duration-300 hover:scale-105"
-            >
-              <Download className="mr-2 h-5 w-5" />
-              Descargar App
-            </Button>
+            <Link to="/registro">
+              <Button 
+                size="lg" 
+                className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 rounded-full shadow-soft hover:shadow-card transition-all duration-300 hover:scale-105"
+              >
+                <Download className="mr-2 h-5 w-5" />
+                Comenzar Ahora
+              </Button>
+            </Link>
             
             <Button 
               size="lg" 
               variant="outline"
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
               className="border-2 border-primary bg-card/50 backdrop-blur-sm text-primary hover:bg-primary hover:text-primary-foreground text-lg px-8 py-6 rounded-full transition-all duration-300 hover:scale-105"
             >
               Conoce más
