@@ -60,8 +60,8 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
-          coral: "hsl(var(--accent-coral))",
-          "coral-foreground": "hsl(var(--accent-coral-foreground))",
+          mint: "hsl(var(--accent-mint))",
+          "mint-foreground": "hsl(var(--accent-mint-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -81,6 +81,8 @@ export default {
         'gradient-peace': 'var(--gradient-peace)',
         'gradient-energy': 'var(--gradient-energy)',
         'gradient-breathing': 'var(--gradient-breathing)',
+        'gradient-sunset': 'var(--gradient-sunset)',
+        'gradient-morning': 'var(--gradient-morning)',
       },
       boxShadow: {
         'soft': 'var(--shadow-soft)',
@@ -89,6 +91,7 @@ export default {
         'elegant': 'var(--shadow-elegant)',
         'vibrant': 'var(--shadow-vibrant)',
         'button': 'var(--shadow-button)',
+        'hover': 'var(--shadow-hover)',
       },
       borderRadius: {
         lg: "var(--radius)",

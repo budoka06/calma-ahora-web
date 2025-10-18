@@ -8,86 +8,90 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* CalmaAhora - Paleta luminosa de calma activa y optimismo */
-    --background: 30 100% 97%; /* Crema claro cálido #FFF9F3 */
-    --foreground: 0 0% 27%; /* Gris cálido para texto #444444 */
+    /* CalmaAhora - Paleta ultra luminosa llena de vida y esperanza */
+    --background: 40 100% 98%; /* Blanco cálido luminoso */
+    --foreground: 25 15% 35%; /* Marrón suave cálido para texto legible */
 
-    /* Paleta emocional principal */
-    --calma-sky: 200 75% 64%; /* Azul cielo brillante #5AB9EA - calma, claridad */
-    --calma-mint: 142 60% 71%; /* Verde menta luminoso #88E0A3 - equilibrio, frescura */
-    --calma-sunshine: 48 100% 67%; /* Amarillo suave energético #FFE156 - optimismo */
-    --calma-coral: 8 100% 71%; /* Coral cálido #FF7F6B - empatía, calidez */
-    --calma-success: 132 60% 65%; /* Verde esperanza #6EDC82 - motivación */
-    --calma-warning: 28 100% 68%; /* Naranja amable #FFA45B - advertencia suave */
+    /* Paleta de vida y esperanza */
+    --calma-sky: 200 90% 70%; /* Azul cielo ultra brillante */
+    --calma-mint: 150 75% 75%; /* Verde menta luminoso */
+    --calma-sunshine: 45 100% 70%; /* Amarillo sol radiante */
+    --calma-coral: 10 100% 75%; /* Coral melocotón cálido */
+    --calma-success: 140 70% 70%; /* Verde esperanza brillante */
+    --calma-warning: 30 100% 72%; /* Naranja amable luminoso */
     
-    /* Colores complementarios para numerología */
-    --calma-lavender: 270 65% 75%; /* Lavanda introspección */
-    --calma-turquoise: 175 60% 65%; /* Turquesa movimiento */
-    --calma-peach: 20 100% 78%; /* Durazno creatividad */
-    --calma-rose: 340 75% 75%; /* Rosa calidez */
-    --calma-lime: 85 70% 65%; /* Lima vitalidad */
-    --calma-gold: 45 100% 60%; /* Dorado inspiración */
+    /* Colores complementarios luminosos */
+    --calma-lavender: 270 70% 80%; /* Lavanda clarísima */
+    --calma-turquoise: 175 75% 72%; /* Turquesa brillante */
+    --calma-peach: 20 100% 82%; /* Durazno suave */
+    --calma-rose: 340 85% 80%; /* Rosa dulce */
+    --calma-lime: 80 75% 70%; /* Lima fresca */
+    --calma-gold: 42 100% 65%; /* Dorado cálido */
 
-    --card: 0 0% 100%; /* Blanco cálido para cards */
-    --card-foreground: 0 0% 27%;
+    --card: 0 0% 100%; /* Blanco puro */
+    --card-foreground: 25 15% 35%;
 
-    --popover: 30 100% 97%;
-    --popover-foreground: 0 0% 27%;
+    --popover: 40 100% 98%;
+    --popover-foreground: 25 15% 35%;
 
-    /* Azul cielo brillante - primario */
-    --primary: 200 75% 64%; /* #5AB9EA */
+    /* Azul cielo ultra brillante - primario */
+    --primary: 200 90% 70%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 200 75% 74%; /* Más claro al hover #82D1F0 */
+    --primary-hover: 200 90% 78%;
 
-    /* Verde menta luminoso - secundario */
-    --secondary: 142 60% 71%; /* #88E0A3 */
+    /* Coral cálido - secundario */
+    --secondary: 10 100% 75%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Amarillo energético - acento */
-    --accent: 48 100% 67%; /* #FFE156 */
-    --accent-foreground: 0 0% 27%;
+    /* Amarillo sol - acento */
+    --accent: 45 100% 70%;
+    --accent-foreground: 25 15% 35%;
 
-    /* Coral cálido - acento secundario */
-    --accent-coral: 8 100% 71%; /* #FF7F6B */
-    --accent-coral-foreground: 0 0% 100%;
+    /* Verde menta - acento secundario */
+    --accent-mint: 150 75% 75%;
+    --accent-mint-foreground: 0 0% 100%;
 
-    --muted: 30 40% 92%;
-    --muted-foreground: 0 0% 44%; /* Gris medio #707070 */
+    --muted: 40 60% 95%;
+    --muted-foreground: 25 10% 50%;
 
-    /* Verde éxito brillante */
-    --success: 132 60% 65%; /* #6EDC82 */
+    /* Verde esperanza */
+    --success: 140 70% 70%;
     --success-foreground: 0 0% 100%;
 
-    /* Naranja advertencia amable */
-    --destructive: 28 100% 68%; /* #FFA45B */
+    /* Naranja amable */
+    --destructive: 30 100% 72%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 91%; /* #E8E8E8 */
-    --input: 30 40% 94%;
-    --ring: 200 75% 64%;
+    --border: 40 50% 90%;
+    --input: 40 60% 96%;
+    --ring: 200 90% 70%;
 
-    --radius: 1rem;
+    --radius: 1.5rem;
 
-    /* Gradientes luminosos y naturales */
-    --gradient-calm: linear-gradient(135deg, hsl(200, 75%, 64%), hsl(142, 60%, 71%));
-    --gradient-hero: linear-gradient(135deg, hsl(48, 100%, 67%) 0%, hsl(8, 100%, 71%) 30%, hsl(200, 75%, 64%) 60%, hsl(142, 60%, 71%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(30, 100%, 98%));
-    --gradient-primary: linear-gradient(135deg, hsl(200, 75%, 64%), hsl(175, 60%, 65%));
-    --gradient-joy: linear-gradient(135deg, hsl(48, 100%, 67%), hsl(28, 100%, 68%));
-    --gradient-peace: linear-gradient(135deg, hsl(142, 60%, 71%), hsl(175, 60%, 65%));
-    --gradient-energy: linear-gradient(135deg, hsl(8, 100%, 71%), hsl(48, 100%, 67%));
-    --gradient-breathing: linear-gradient(180deg, hsl(200, 75%, 64%), hsl(142, 60%, 71%));
+    /* Degradados ultra luminosos y vitales */
+    --gradient-calm: linear-gradient(135deg, hsl(200, 90%, 70%) 0%, hsl(150, 75%, 75%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(45, 100%, 70%) 0%, hsl(10, 100%, 75%) 25%, hsl(340, 85%, 80%) 50%, hsl(200, 90%, 70%) 75%, hsl(150, 75%, 75%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%) 0%, hsl(40, 100%, 98%) 50%, hsl(200, 90%, 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(200, 90%, 70%) 0%, hsl(175, 75%, 72%) 100%);
+    --gradient-joy: linear-gradient(135deg, hsl(45, 100%, 70%) 0%, hsl(30, 100%, 72%) 50%, hsl(10, 100%, 75%) 100%);
+    --gradient-peace: linear-gradient(135deg, hsl(150, 75%, 75%) 0%, hsl(175, 75%, 72%) 50%, hsl(200, 90%, 70%) 100%);
+    --gradient-energy: linear-gradient(135deg, hsl(340, 85%, 80%) 0%, hsl(10, 100%, 75%) 50%, hsl(45, 100%, 70%) 100%);
+    --gradient-breathing: linear-gradient(180deg, hsl(200, 90%, 70%) 0%, hsl(150, 75%, 75%) 100%);
+    --gradient-sunset: linear-gradient(135deg, hsl(340, 85%, 80%) 0%, hsl(20, 100%, 82%) 50%, hsl(45, 100%, 70%) 100%);
+    --gradient-morning: linear-gradient(135deg, hsl(200, 90%, 70%) 0%, hsl(45, 100%, 70%) 100%);
 
-    /* Sombras suaves y luminosas */
-    --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-    --shadow-card: 0 8px 30px -5px rgba(90, 185, 234, 0.15);
-    --shadow-glow: 0 0 40px rgba(90, 185, 234, 0.2);
-    --shadow-elegant: 0 10px 30px -10px rgba(90, 185, 234, 0.3);
-    --shadow-vibrant: 0 0 50px rgba(136, 224, 163, 0.25);
-    --shadow-button: 0 4px 12px rgba(90, 185, 234, 0.3);
+    /* Sombras ultra suaves y difusas */
+    --shadow-soft: 0 2px 16px -2px rgba(200, 180, 150, 0.08);
+    --shadow-card: 0 4px 24px -4px rgba(90, 185, 234, 0.12);
+    --shadow-glow: 0 0 32px rgba(255, 225, 86, 0.2);
+    --shadow-elegant: 0 6px 24px -6px rgba(255, 127, 107, 0.15);
+    --shadow-vibrant: 0 0 40px rgba(136, 224, 163, 0.18);
+    --shadow-button: 0 3px 12px rgba(200, 180, 150, 0.15);
+    --shadow-hover: 0 6px 20px rgba(200, 180, 150, 0.2);
 
-    /* Transiciones */
+    /* Transiciones suaves y naturales */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
