@@ -6,19 +6,19 @@ const Footer = () => {
     <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-6">
         {/* CTA Section */}
-        <div className="text-center mb-12 animate-fade-in-up">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Comienza tu viaje hacia la calma
+        <div className="max-w-4xl mx-auto text-center bg-gradient-card rounded-3xl p-12 shadow-card mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+            Tómate un respiro. Todo está bien.
           </h2>
-          <p className="text-xl mb-8 text-background/80 max-w-2xl mx-auto">
-            Descarga CalmaAhora y encuentra paz en cada respiración
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Descarga CalmaAhora y comienza tu viaje hacia una vida más tranquila, consciente y equilibrada
           </p>
           <Button 
-            size="lg" 
-            className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-10 py-6 rounded-full shadow-glow transition-all duration-300 hover:scale-105"
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 rounded-full shadow-soft hover:shadow-card transition-all duration-300 hover:scale-105"
           >
             <Download className="mr-2 h-5 w-5" />
-            Descargar ahora
+            Descargar CalmaAhora
           </Button>
         </div>
 
@@ -68,15 +68,15 @@ const Footer = () => {
 
           {/* Bottom bar */}
           <div className="border-t border-background/20 pt-8 text-center">
-            <p className="text-background/60 mb-4 flex items-center justify-center gap-2">
-              Hecho con <Heart className="w-4 h-4 fill-current animate-pulse-soft" /> para tu bienestar emocional
-            </p>
+            <p className="text-lg font-medium text-background/80 mb-3">Respira. Conecta. CalmaAhora.</p>
             <p className="text-background/50 text-sm">
-              © 2025 CalmaAhora. Todos los derechos reservados. | Política de privacidad | Términos de servicio
+              © 2025 CalmaAhora. Todos los derechos reservados.
             </p>
-            <p className="text-background/50 text-xs mt-2 italic">
-              Respira. Conecta. CalmaAhora.
-            </p>
+            <div className="flex justify-center gap-6 mt-4 text-sm">
+              <a href="#" className="text-background/60 hover:text-background transition-colors">Política de Privacidad</a>
+              <a href="#" className="text-background/60 hover:text-background transition-colors">Términos de Servicio</a>
+              <a href="#" className="text-background/60 hover:text-background transition-colors">Contacto</a>
+            </div>
           </div>
         </div>
       </div>

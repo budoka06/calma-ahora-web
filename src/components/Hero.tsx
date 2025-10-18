@@ -22,11 +22,11 @@ const Hero = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-foreground leading-tight">
-            Encuentra calma en cualquier momento
+            Tu calma empieza ahora
           </h1>
           
           <p className="text-xl md:text-2xl mb-10 text-foreground/80 max-w-2xl mx-auto leading-relaxed">
-            CalmaAhora te acompaña a regular tus emociones con técnicas de respiración y autoconocimiento
+            Una app que te acompaña a regular tus emociones con respiración, autoconocimiento y empatía
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -36,7 +36,7 @@ const Hero = () => {
                 className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 rounded-full shadow-soft hover:shadow-card transition-all duration-300 hover:scale-105"
               >
                 <Download className="mr-2 h-5 w-5" />
-                Comenzar Ahora
+                Descargar CalmaAhora
               </Button>
             </Link>
             
