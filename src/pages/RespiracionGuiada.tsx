@@ -110,14 +110,16 @@ const RespiracionGuiada = () => {
   const [fase, setFase] = useState(0);
   const [escala, setEscala] = useState(1);
   const [audioMuted, setAudioMuted] = useState(false);
+  const [iniciado, setIniciado] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
   const instrucciones = obtenerInstrucciones(tecnicaElegida);
   const mensajePersonalizado = obtenerMensajePersonalizado(perfilNumerologico);
 
-  // Música de fondo por técnica
-  useEffect(() => {
-    // Pistas verificadas de Pixabay (libre de derechos)
+  const iniciarRespiracion = () => {
+    setIniciado(true);
+    
+    // Configurar música
     const musicMap: Record<string, { url: string; volume: number }> = {
       'Respiración 4-6': { 
         url: 'https://cdn.pixabay.com/audio/2022/03/10/audio_1808fbf07a.mp3',
@@ -146,94 +148,49 @@ const RespiracionGuiada = () => {
       volume: 0.25 
     };
 
-    // Detener cualquier pista anterior
-    if (audioRef.current) {
-      try { 
-        audioRef.current.pause();
-        audioRef.current.src = '';
-      } catch {}
-      audioRef.current = null;
-    }
-
     const audio = new Audio(cfg.url);
     audioRef.current = audio;
     audio.loop = true;
     audio.volume = 0;
 
-    // Intentar reproducir
-    const playPromise = audio.play();
-    
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          console.log('Audio playing successfully');
-          // Fade in
-          const step = 0.04;
-          const target = cfg.volume;
-          const fadeIn = setInterval(() => {
-            if (!audioRef.current || audioRef.current !== audio) {
-              clearInterval(fadeIn);
-              return;
-            }
-            if (audio.volume < target - 0.01) {
-              audio.volume = Math.min(target, audio.volume + step);
-            } else {
-              clearInterval(fadeIn);
-            }
-          }, 100);
-        })
-        .catch(error => {
-          console.log('Autoplay prevented - user interaction needed:', error);
-          // Intentar reproducir con interacción del usuario
-          const handleInteraction = () => {
-            audio.play().then(() => {
-              console.log('Audio started after user interaction');
-              // Fade in después de la interacción
-              const step = 0.04;
-              const target = cfg.volume;
-              const fadeIn = setInterval(() => {
-                if (!audioRef.current || audioRef.current !== audio) {
-                  clearInterval(fadeIn);
-                  return;
-                }
-                if (audio.volume < target - 0.01) {
-                  audio.volume = Math.min(target, audio.volume + step);
-                } else {
-                  clearInterval(fadeIn);
-                }
-              }, 100);
-            });
-            document.removeEventListener('click', handleInteraction);
-            document.removeEventListener('touchstart', handleInteraction);
-          };
-          document.addEventListener('click', handleInteraction, { once: true });
-          document.addEventListener('touchstart', handleInteraction, { once: true });
-        });
-    }
+    // Iniciar reproducción (garantizado por interacción del usuario)
+    audio.play().then(() => {
+      console.log('Audio iniciado correctamente');
+      // Fade in
+      const step = 0.05;
+      const target = cfg.volume;
+      const fadeIn = setInterval(() => {
+        if (!audioRef.current || audioRef.current !== audio) {
+          clearInterval(fadeIn);
+          return;
+        }
+        if (audio.volume < target - 0.01) {
+          audio.volume = Math.min(target, audio.volume + step);
+        } else {
+          clearInterval(fadeIn);
+        }
+      }, 80);
+    }).catch(error => {
+      console.error('Error al iniciar audio:', error);
+    });
+  };
 
+  // Cleanup al desmontar
+  useEffect(() => {
     return () => {
-      if (audioRef.current && audioRef.current === audio) {
-        const fadeOut = setInterval(() => {
-          if (!audioRef.current || audioRef.current !== audio) {
-            clearInterval(fadeOut);
-            return;
-          }
-          if (audio.volume > 0.04) {
-            audio.volume = Math.max(0, audio.volume - 0.04);
-          } else {
-            clearInterval(fadeOut);
-            audio.pause();
-            audio.src = '';
-            if (audioRef.current === audio) {
-              audioRef.current = null;
-            }
-          }
-        }, 100);
+      if (audioRef.current) {
+        try {
+          audioRef.current.pause();
+          audioRef.current.src = '';
+        } catch {}
+        audioRef.current = null;
       }
     };
-  }, [tecnicaElegida]);
+  }, []);
 
   useEffect(() => {
+    if (!iniciado) return;
+    
     const instrucciones = obtenerInstrucciones(tecnicaElegida);
     const numFases = instrucciones.duraciones.length;
     
@@ -242,7 +199,7 @@ const RespiracionGuiada = () => {
     }, instrucciones.tiempoCiclo / numFases);
 
     return () => clearInterval(interval);
-  }, [tecnicaElegida]);
+  }, [tecnicaElegida, iniciado]);
 
   useEffect(() => {
     const instrucciones = obtenerInstrucciones(tecnicaElegida);
@@ -272,15 +229,17 @@ const RespiracionGuiada = () => {
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4 flex items-center justify-center">
       <BackButton />
       
-      <Button
-        onClick={toggleAudio}
-        variant="ghost"
-        size="icon"
-        className="fixed top-4 right-4 z-40 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full shadow-md"
-        aria-label={audioMuted ? "Activar audio" : "Silenciar audio"}
-      >
-        {audioMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-      </Button>
+      {iniciado && (
+        <Button
+          onClick={toggleAudio}
+          variant="ghost"
+          size="icon"
+          className="fixed top-4 right-4 z-40 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full shadow-md"
+          aria-label={audioMuted ? "Activar audio" : "Silenciar audio"}
+        >
+          {audioMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+        </Button>
+      )}
 
       <div className="max-w-2xl w-full space-y-8 animate-fade-in">
         <div className="text-center space-y-4">
@@ -288,7 +247,30 @@ const RespiracionGuiada = () => {
           <p className="text-lg text-calma-ocean/80">{instrucciones.descripcion}</p>
         </div>
 
-        <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-elegant p-8 space-y-8">
+        {!iniciado ? (
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-elegant p-8 space-y-6 text-center">
+            <div className="space-y-4">
+              <p className="text-calma-ocean text-lg">
+                Prepárate para comenzar tu práctica de respiración
+              </p>
+              <ul className="text-calma-ocean/70 space-y-2 text-left max-w-md mx-auto">
+                <li>✓ Busca un lugar tranquilo</li>
+                <li>✓ Siéntate o acuéstate cómodamente</li>
+                <li>✓ Activa el audio de tu dispositivo</li>
+                <li>✓ Respira naturalmente antes de comenzar</li>
+              </ul>
+            </div>
+            
+            <Button
+              onClick={iniciarRespiracion}
+              size="lg"
+              className="w-full h-16 text-xl bg-gradient-primary hover:opacity-90"
+            >
+              Comenzar Respiración
+            </Button>
+          </div>
+        ) : (
+          <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-elegant p-8 space-y-8">
           <div className="flex justify-center">
             <div
               className="w-48 h-48 rounded-full bg-gradient-primary transition-transform duration-[4000ms] ease-in-out shadow-glow"
@@ -313,14 +295,15 @@ const RespiracionGuiada = () => {
             </p>
           </div>
 
-          <Button
-            onClick={handleFinalizar}
-            size="lg"
-            className="w-full h-14 text-lg"
-          >
-            He Terminado
-          </Button>
-        </div>
+            <Button
+              onClick={handleFinalizar}
+              size="lg"
+              className="w-full h-14 text-lg"
+            >
+              He Terminado
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
