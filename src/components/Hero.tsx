@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Download } from "lucide-react";
+import { Play } from "lucide-react";
 import heroImage from "@/assets/hero-calma.jpg";
 
 const Hero = () => {
@@ -35,8 +35,8 @@ const Hero = () => {
                 size="lg" 
                 className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6 rounded-full shadow-soft hover:shadow-card transition-all duration-300 hover:scale-105"
               >
-                <Download className="mr-2 h-5 w-5" />
-                Descargar CalmaAhora
+                <Play className="mr-2 h-5 w-5" />
+                Iniciar
               </Button>
             </Link>
             
