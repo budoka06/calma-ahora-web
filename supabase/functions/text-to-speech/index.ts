@@ -17,51 +17,45 @@ serve(async (req) => {
       throw new Error('Text is required');
     }
 
-    const ELEVENLABS_API_KEY = Deno.env.get('ELEVENLABS_API_KEY');
-    if (!ELEVENLABS_API_KEY) {
-      throw new Error('ELEVENLABS_API_KEY is not configured');
+    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+    if (!OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY is not configured');
     }
 
-    // Voces de ElevenLabs optimizadas para meditación - voces suaves y calmadas
+    // Voces de OpenAI optimizadas para meditación
     const voiceMap: Record<string, string> = {
-      feliz: 'pFZP5JQG7iQjIQuC4Bku',      // Lily - voz suave y cálida
-      tranquilo: 'EXAVITQu4vr4xnSDxMaL',  // Sarah - voz serena
-      ansioso: 'XB0fDUnXU5powFXDhCwa',    // Charlotte - voz calmada
-      triste: 'pFZP5JQG7iQjIQuC4Bku',     // Lily - voz compasiva
-      enojado: 'SAz9YHcvj6GT2YYXdXww',    // River - voz equilibrada
+      feliz: 'nova',      // Voz cálida y amigable
+      tranquilo: 'shimmer',  // Voz calmada y serena
+      ansioso: 'alloy',    // Voz neutral y equilibrada
+      triste: 'echo',     // Voz suave y empática
+      enojado: 'onyx',    // Voz profunda y estable
     };
 
-    const voiceId = voiceMap[emotion] || voiceMap.tranquilo;
+    const voice = voiceMap[emotion] || voiceMap.tranquilo;
 
-    console.log(`Generating speech for emotion: ${emotion} with voice: ${voiceId}`);
+    console.log(`Generating speech for emotion: ${emotion} with voice: ${voice}`);
 
     const response = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+      'https://api.openai.com/v1/audio/speech',
       {
         method: 'POST',
         headers: {
-          'Accept': 'audio/mpeg',
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
-          'xi-api-key': ELEVENLABS_API_KEY,
         },
         body: JSON.stringify({
-          text,
-          model_id: 'eleven_multilingual_v2',
-          voice_settings: {
-            stability: 0.7,           // Mayor estabilidad para voz más consistente
-            similarity_boost: 0.8,    // Mayor similitud con la voz base
-            style: 0.3,               // Menos estilo para mantener calma
-            use_speaker_boost: true,
-            speaking_rate: 0.85,      // Velocidad más lenta
-          },
+          model: 'tts-1',
+          input: text,
+          voice: voice,
+          speed: 0.85, // Velocidad más lenta para meditación
         }),
       }
     );
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('ElevenLabs API error:', response.status, errorText);
-      throw new Error(`ElevenLabs API error: ${response.status}`);
+      console.error('OpenAI API error:', response.status, errorText);
+      throw new Error(`OpenAI API error: ${response.status}`);
     }
 
     // Convertir audio a base64
