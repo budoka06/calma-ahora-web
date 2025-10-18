@@ -12,6 +12,7 @@ import RespiracionGuiada from "./pages/RespiracionGuiada";
 import RespiracionSOS from "./pages/RespiracionSOS";
 import FeedbackEmocional from "./pages/FeedbackEmocional";
 import BitacoraEmocional from "./pages/BitacoraEmocional";
+import ChatEmpatico from "./pages/ChatEmpatico";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/respiracion-sos" element={<RespiracionSOS />} />
             <Route path="/feedback" element={<FeedbackEmocional />} />
             <Route path="/bitacora" element={<BitacoraEmocional />} />
+            <Route path="/chat" element={<ChatEmpatico />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

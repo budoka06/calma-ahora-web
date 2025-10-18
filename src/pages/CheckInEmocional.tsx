@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useAppContext } from '@/contexts/AppContext';
-import { BookHeart, AlertCircle } from 'lucide-react';
+import { BookHeart, AlertCircle, MessageCircle } from 'lucide-react';
 
 const emociones = [
   { emoji: '😊', label: 'Feliz', value: 'feliz' },
@@ -107,7 +107,7 @@ const CheckInEmocional = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Button
               onClick={handleCalmaAhora}
               size="lg"
@@ -124,6 +124,15 @@ const CheckInEmocional = () => {
             >
               <AlertCircle className="mr-2" />
               SOS
+            </Button>
+            <Button
+              onClick={() => navigate('/chat')}
+              size="lg"
+              variant="outline"
+              className="h-14 text-lg border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
+            >
+              <MessageCircle className="mr-2" />
+              Chat IA
             </Button>
           </div>
         </div>

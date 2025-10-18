@@ -1,0 +1,4 @@
+project_id = "mtyfvwsvsxewvpllucct"
+
+[functions.chat-empathico]
+verify_jwt = false
