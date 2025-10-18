@@ -18,9 +18,9 @@ serve(async (req) => {
       throw new Error('Text is required');
     }
 
-    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
-    if (!LOVABLE_API_KEY) {
-      throw new Error('LOVABLE_API_KEY is not configured');
+    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
+    if (!OPENAI_API_KEY) {
+      throw new Error('OPENAI_API_KEY is not configured');
     }
 
     // Voces optimizadas para meditación
@@ -45,7 +45,7 @@ serve(async (req) => {
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+          'Authorization': `Bearer ${OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -60,7 +60,22 @@ serve(async (req) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('TTS API error:', response.status, errorText);
-      throw new Error(`TTS API error: ${response.status}`);
+      if (response.status === 429) {
+        return new Response(
+          JSON.stringify({ error: 'Límite de uso de TTS excedido. Inténtalo de nuevo más tarde.' }),
+          { status: 429, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      if (response.status === 402) {
+        return new Response(
+          JSON.stringify({ error: 'Pago requerido para TTS. Revisa tu plan o créditos.' }),
+          { status: 402, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      return new Response(
+        JSON.stringify({ error: 'Error del servicio TTS' }),
+        { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     // Convertir audio a base64

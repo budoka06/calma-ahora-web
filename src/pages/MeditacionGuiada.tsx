@@ -110,6 +110,9 @@ const MeditacionGuiada = () => {
     setIniciada(true);
     setTecnicaElegida(config.titulo);
     
+    // Cargar voces del navegador si están disponibles (algunos navegadores requieren precarga)
+    try { if ('speechSynthesis' in window) { window.speechSynthesis.getVoices(); } } catch {}
+    
     // Iniciar audio de fondo (fade-in)
     if (audioRef.current) {
       audioRef.current.volume = 0;
@@ -128,7 +131,55 @@ const MeditacionGuiada = () => {
     // Narrar primer paso después de un pequeño delay
     setTimeout(() => narrarPaso(0), 500);
   };
-
+  
+  // Fallback: usar la voz del navegador si la API de TTS falla
+  const narrarConVozNavegador = (texto: string, index: number) => {
+    try {
+      if ('speechSynthesis' in window) {
+        const utter = new SpeechSynthesisUtterance(texto);
+        const voices = window.speechSynthesis.getVoices();
+        const esVoice = voices.find(v => (v.lang || '').toLowerCase().startsWith('es')) || voices[0];
+        if (esVoice) utter.voice = esVoice;
+        utter.lang = esVoice?.lang || 'es-ES';
+        utter.rate = 0.85;
+        utter.pitch = 0.9;
+        utter.volume = audioMuted ? 0 : 1;
+        utter.onend = () => {
+          setIsNarrating(false);
+          setTimeout(() => {
+            const siguiente = index + 1;
+            if (siguiente < config.pasos.length) {
+              setPasoActual(siguiente);
+              narrarPaso(siguiente);
+            } else {
+              finalizarMeditacion();
+            }
+          }, 2000);
+        };
+        setIsNarrating(true);
+        window.speechSynthesis.speak(utter);
+        try {
+          toast({
+            title: 'Usando voz del navegador',
+            description: 'La narración puede variar según tu dispositivo.',
+          });
+        } catch {}
+        return;
+      }
+    } catch {}
+    // Último recurso: avanzar sin voz tras un tiempo razonable
+    setIsNarrating(false);
+    setTimeout(() => {
+      const siguiente = index + 1;
+      if (siguiente < config.pasos.length) {
+        setPasoActual(siguiente);
+        narrarPaso(siguiente);
+      } else {
+        finalizarMeditacion();
+      }
+    }, 8000);
+  };
+  
   const narrarPaso = async (index: number) => {
     // Detener narración anterior si existe
     if (currentAudioRef.current) {
@@ -150,12 +201,13 @@ const MeditacionGuiada = () => {
 
       if (error) {
         console.error('Error generating speech:', error);
-        toast({
-          title: 'Error al generar audio',
-          description: 'No se pudo generar la narración. Intenta de nuevo.',
-          variant: 'destructive'
-        });
-        setIsNarrating(false);
+        try {
+          toast({
+            title: 'No se pudo generar audio con el servicio',
+            description: 'Usando voz del navegador como alternativa.',
+          });
+        } catch {}
+        narrarConVozNavegador(config.pasos[index], index);
         return;
       }
 
@@ -194,12 +246,13 @@ const MeditacionGuiada = () => {
       }
     } catch (error) {
       console.error('Error in narration:', error);
-      toast({
-        title: 'Error al reproducir audio',
-        description: 'Hubo un problema con la reproducción.',
-        variant: 'destructive'
-      });
-      setIsNarrating(false);
+      try {
+        toast({
+          title: 'No se pudo reproducir audio',
+          description: 'Usando voz del navegador como alternativa.',
+        });
+      } catch {}
+      narrarConVozNavegador(config.pasos[index], index);
     }
   };
 
@@ -228,6 +281,7 @@ const MeditacionGuiada = () => {
       currentAudioRef.current.pause();
       currentAudioRef.current = null;
     }
+    try { if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); } } catch {}
   };
   const toggleAudio = () => {
     setAudioMuted(!audioMuted);
@@ -252,6 +306,7 @@ const MeditacionGuiada = () => {
       if (audioRef.current) {
         audioRef.current.pause();
       }
+      try { if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); } } catch {}
     };
   }, []);
 
