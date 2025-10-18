@@ -1,5 +1,6 @@
 import { Heart, Brain, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const About = () => {
   const navigate = useNavigate();
@@ -50,8 +51,7 @@ const About = () => {
               return (
                 <div
                   key={feature.title}
-                  onClick={feature.action}
-                  className="bg-gradient-card rounded-3xl p-8 shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-2 text-center cursor-pointer group"
+                  className="bg-gradient-card rounded-3xl p-8 shadow-soft hover:shadow-card transition-all duration-300 hover:-translate-y-2 text-center group"
                 >
                   <div className={`w-16 h-16 ${feature.bgClass} rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-soft group-hover:scale-110 transition-transform`}
                     style={{ animationDelay: `${index * 0.5}s` }}
@@ -61,9 +61,15 @@ const About = () => {
                   <h3 className="text-xl font-semibold mb-4 text-foreground group-hover:text-primary transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed mb-6">
                     {feature.description}
                   </p>
+                  <Button 
+                    onClick={feature.action}
+                    className="w-full bg-gradient-primary hover:opacity-90"
+                  >
+                    Probar
+                  </Button>
                 </div>
               );
             })}
