@@ -110,7 +110,8 @@ const RespiracionGuiada = () => {
   const [fase, setFase] = useState(0);
   const [escala, setEscala] = useState(1);
   const [audioMuted, setAudioMuted] = useState(false);
-  const [iniciado, setIniciado] = useState(false);
+  const [iniciado, setIniciado] = useState(true);
+  const [needsInteraction, setNeedsInteraction] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
   const instrucciones = obtenerInstrucciones(tecnicaElegida);
@@ -153,9 +154,10 @@ const RespiracionGuiada = () => {
     audio.loop = true;
     audio.volume = 0;
 
-    // Iniciar reproducción (garantizado por interacción del usuario)
+    // Iniciar reproducción (intento inmediato)
     audio.play().then(() => {
       console.log('Audio iniciado correctamente');
+      setNeedsInteraction(false);
       // Fade in
       const step = 0.05;
       const target = cfg.volume;
@@ -172,8 +174,14 @@ const RespiracionGuiada = () => {
       }, 80);
     }).catch(error => {
       console.error('Error al iniciar audio:', error);
+      setNeedsInteraction(true);
     });
   };
+
+  // Auto-inicio al montar (puede fallar si el navegador bloquea autoplay)
+  useEffect(() => {
+    iniciarRespiracion();
+  }, []);
 
   // Cleanup al desmontar
   useEffect(() => {
@@ -228,6 +236,15 @@ const RespiracionGuiada = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4 flex items-center justify-center">
       <BackButton />
+
+      {/* Botón para activar sonido si el navegador lo bloqueó */}
+      {needsInteraction && (
+        <div className="fixed bottom-6 inset-x-0 flex justify-center z-40">
+          <Button onClick={iniciarRespiracion} className="shadow-elegant">
+            Activar sonido
+          </Button>
+        </div>
+      )}
       
       {iniciado && (
         <Button
