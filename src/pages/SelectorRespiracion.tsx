@@ -111,7 +111,7 @@ const SelectorRespiracion = () => {
                   </Button>
                 </div>
 
-                <div className={`absolute inset-0 bg-gradient-to-br ${tecnica.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+                <div className={`absolute inset-0 bg-gradient-to-br ${tecnica.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none`} />
               </Card>
             );
           })}
