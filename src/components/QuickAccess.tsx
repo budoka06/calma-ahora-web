@@ -1,80 +1,68 @@
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Wind, MessageCircle, Star } from 'lucide-react';
+import { Heart, Brain, Sparkles } from 'lucide-react';
 
 const QuickAccess = () => {
   const navigate = useNavigate();
 
   const features = [
     {
-      icon: Wind,
-      title: 'Respiración Guiada',
-      description: 'Técnicas personalizadas para regular tus emociones',
+      icon: Heart,
+      title: 'Respiración guiada',
+      description: 'Técnicas personalizadas según tu emoción: 4-7-8, Box Breathing y más',
       action: () => navigate('/selector-respiracion'),
-      gradient: 'from-calma-mint to-calma-ocean'
+      iconBg: 'bg-teal-900/80',
+      iconColor: 'text-teal-400'
     },
     {
-      icon: MessageCircle,
-      title: 'Chat Empático con IA',
-      description: 'Comparte cómo te sientes en un espacio seguro',
+      icon: Brain,
+      title: 'Chat empático con IA',
+      description: 'Conversaciones en español, culturalmente adaptadas y con acciones contextualizadas',
       action: () => navigate('/chat'),
-      gradient: 'from-calma-lavender to-calma-ocean'
+      iconBg: 'bg-purple-900/80',
+      iconColor: 'text-purple-400'
     },
     {
-      icon: Star,
-      title: 'Numerología Simbólica',
-      description: 'Descubre tu perfil emocional personalizado',
+      icon: Sparkles,
+      title: 'Numerología simbólica',
+      description: 'Personalización basada en tu perfil, sin enfoque esotérico sino de autoconocimiento',
       action: () => navigate('/registro'),
-      gradient: 'from-calma-coral to-calma-ocean'
+      iconBg: 'bg-gray-800/80',
+      iconColor: 'text-gray-300'
     }
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-calma-sand/30 to-white">
+    <section className="py-20 px-4 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-calma-ocean mb-4">
-            Acceso Rápido
-          </h2>
-          <p className="text-lg text-calma-ocean/70">
-            Comienza tu viaje hacia el bienestar emocional
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature) => {
             const Icon = feature.icon;
             return (
-              <Card
+              <div
                 key={feature.title}
-                className="group relative overflow-hidden bg-white/90 backdrop-blur-sm border-2 border-calma-ocean/10 hover:border-calma-ocean/30 transition-all duration-300 hover:shadow-glow cursor-pointer"
+                className="group cursor-pointer"
                 onClick={feature.action}
               >
-                <div className="p-8 space-y-4">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                    <Icon className="w-8 h-8 text-white" />
+                <div className="text-center space-y-6">
+                  {/* Icon Circle */}
+                  <div className="flex justify-center">
+                    <div className={`w-24 h-24 rounded-full ${feature.iconBg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className={`w-12 h-12 ${feature.iconColor}`} strokeWidth={1.5} />
+                    </div>
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-calma-ocean">
+                  {/* Title */}
+                  <h3 className="text-2xl font-medium text-gray-200 group-hover:text-white transition-colors">
                     {feature.title}
                   </h3>
                   
-                  <p className="text-calma-ocean/70">
+                  {/* Description */}
+                  <p className="text-gray-400 leading-relaxed px-4">
                     {feature.description}
                   </p>
-
-                  <Button 
-                    className="w-full mt-4 bg-gradient-primary hover:opacity-90"
-                    size="lg"
-                  >
-                    Comenzar
-                  </Button>
                 </div>
-
-                {/* Decorative gradient overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
-              </Card>
+              </div>
             );
           })}
         </div>
