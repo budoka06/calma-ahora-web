@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useAppContext } from '@/contexts/AppContext';
 import { useToast } from '@/hooks/use-toast';
+import BackButton from '@/components/BackButton';
 
 const emociones = [
   { emoji: '😊', label: 'Feliz', value: 'feliz' },
@@ -62,6 +63,7 @@ const FeedbackEmocional = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4">
+      <BackButton />
       <div className="max-w-2xl mx-auto pt-8 pb-16 space-y-6 animate-fade-in">
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold text-calma-ocean">

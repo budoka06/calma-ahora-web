@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts/AppContext';
+import BackButton from '@/components/BackButton';
 
 const fases = ['Inhala', 'Mantén', 'Exhala', 'Pausa'];
 
@@ -42,6 +43,7 @@ const RespiracionSOS = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-100 via-red-50 to-pink-100 p-4 flex items-center justify-center">
+      <BackButton />
       <div className="max-w-2xl w-full space-y-8 animate-fade-in">
         <div className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 bg-orange-500 text-white px-6 py-3 rounded-full font-bold text-lg shadow-lg">

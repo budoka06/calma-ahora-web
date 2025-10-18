@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useAppContext } from '@/contexts/AppContext';
-import { Home, Wind, Brain, Moon, Heart, Zap } from 'lucide-react';
+import { Wind, Brain, Moon, Heart, Zap } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const tecnicasRespiracion = [
   {
@@ -58,18 +59,8 @@ const SelectorRespiracion = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4">
+      <BackButton />
       <div className="max-w-6xl mx-auto pt-8 pb-16 space-y-8 animate-fade-in">
-        <div className="flex justify-start mb-4">
-          <Button
-            onClick={() => navigate('/')}
-            variant="ghost"
-            className="gap-2"
-          >
-            <Home className="w-5 h-5" />
-            Inicio
-          </Button>
-        </div>
-
         <div className="text-center space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold text-calma-ocean">
             Elige tu Técnica de Respiración

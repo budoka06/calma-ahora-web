@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAppContext } from '@/contexts/AppContext';
 import { Heart } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const calcularPerfilNumerologico = (fecha: string): number => {
   const digitos = fecha.replace(/\D/g, '');
@@ -38,6 +39,7 @@ const RegistroUsuario = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4">
+      <BackButton />
       <div className="w-full max-w-md bg-white/90 backdrop-blur-sm rounded-3xl shadow-elegant p-8 space-y-6 animate-fade-in">
         <div className="text-center space-y-3">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-full mb-2 animate-float">

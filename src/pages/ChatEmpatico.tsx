@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { Send, MessageCircle, Home } from "lucide-react";
+import { Send, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import BackButton from "@/components/BackButton";
 
 interface Message {
   role: "user" | "assistant";
@@ -125,24 +126,17 @@ const ChatEmpatico = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-secondary/5 py-8 px-4">
+      <BackButton />
       <div className="container max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8 flex items-center gap-4">
-          <Link to="/">
-            <Button variant="ghost" className="gap-2">
-              <Home className="h-5 w-5" />
-              Inicio
-            </Button>
-          </Link>
-          <div className="flex-1">
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground flex items-center gap-3">
-              <MessageCircle className="h-8 w-8 text-primary" />
-              Chat Empático
-            </h1>
-            <p className="text-muted-foreground mt-1">
-              Un espacio seguro para expresar cómo te sientes
-            </p>
-          </div>
+        <div className="mb-8 text-center pt-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground flex items-center justify-center gap-3">
+            <MessageCircle className="h-8 w-8 text-primary" />
+            Chat Empático
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Un espacio seguro para expresar cómo te sientes
+          </p>
         </div>
 
         {/* Chat Messages */}

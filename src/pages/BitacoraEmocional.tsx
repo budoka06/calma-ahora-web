@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts/AppContext';
-import { Home, Calendar, ArrowRight, Heart } from 'lucide-react';
+import { Calendar, ArrowRight, Heart } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 
 const obtenerEmojiPorValor = (valor: string): string => {
   const emojis: { [key: string]: string } = {
@@ -20,18 +21,8 @@ const BitacoraEmocional = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4">
+      <BackButton />
       <div className="max-w-4xl mx-auto pt-8 pb-16 space-y-6 animate-fade-in">
-        <div className="flex items-center justify-between">
-          <Button
-            onClick={() => navigate('/')}
-            variant="ghost"
-            className="gap-2"
-          >
-            <Home className="w-5 h-5" />
-            Inicio
-          </Button>
-        </div>
-
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-primary rounded-full mb-2">
             <Heart className="w-8 h-8 text-white" />
