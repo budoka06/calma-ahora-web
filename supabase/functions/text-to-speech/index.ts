@@ -43,10 +43,10 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'tts-1-hd', // Modelo de alta calidad
+        model: 'tts-1-hd',
         input: text,
         voice: voice,
-        speed: 0.85, // Velocidad más lenta y calmada (0.25 a 4.0, default es 1.0)
+        speed: 0.8,
         response_format: 'mp3',
       }),
     });

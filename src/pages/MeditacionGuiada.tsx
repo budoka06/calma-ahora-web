@@ -177,8 +177,8 @@ const MeditacionGuiada = () => {
           
           // Esperar 2 segundos adicionales antes de avanzar al siguiente paso
           setTimeout(() => {
-            if (pasoActual < config.pasos.length - 1) {
-              const siguiente = pasoActual + 1;
+            const siguiente = index + 1;
+            if (siguiente < config.pasos.length) {
               setPasoActual(siguiente);
               narrarPaso(siguiente);
             } else {
