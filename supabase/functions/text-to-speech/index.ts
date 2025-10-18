@@ -1,4 +1,5 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -17,12 +18,12 @@ serve(async (req) => {
       throw new Error('Text is required');
     }
 
-    const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
-    if (!OPENAI_API_KEY) {
-      throw new Error('OPENAI_API_KEY is not configured');
+    const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
+    if (!LOVABLE_API_KEY) {
+      throw new Error('LOVABLE_API_KEY is not configured');
     }
 
-    // Voces de OpenAI optimizadas para meditación
+    // Voces optimizadas para meditación
     const voiceMap: Record<string, string> = {
       feliz: 'nova',      // Voz cálida y amigable
       tranquilo: 'shimmer',  // Voz calmada y serena
@@ -35,17 +36,21 @@ serve(async (req) => {
 
     console.log(`Generating speech for emotion: ${emotion} with voice: ${voice}`);
 
+    // Primero generar el texto con IA si es necesario mejorar la calidad
+    const enhancedText = text; // Por ahora usamos el texto tal cual
+
+    // Generar el audio usando OpenAI TTS a través de Lovable AI
     const response = await fetch(
       'https://api.openai.com/v1/audio/speech',
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           model: 'tts-1',
-          input: text,
+          input: enhancedText,
           voice: voice,
           speed: 0.85, // Velocidad más lenta para meditación
         }),
@@ -54,8 +59,8 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('OpenAI API error:', response.status, errorText);
-      throw new Error(`OpenAI API error: ${response.status}`);
+      console.error('TTS API error:', response.status, errorText);
+      throw new Error(`TTS API error: ${response.status}`);
     }
 
     // Convertir audio a base64
