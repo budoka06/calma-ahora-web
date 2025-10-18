@@ -37,10 +37,10 @@ const About = () => {
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16 animate-fade-in-up">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Tecnología emocional con alma humana
             </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
               CalmaAhora te acompaña con empatía y respaldo científico. Combina respiración guiada, chat conversacional con IA, numerología simbólica y una bitácora emocional personalizada para ayudarte a regular la ansiedad, el estrés y las emociones intensas.
             </p>
           </div>

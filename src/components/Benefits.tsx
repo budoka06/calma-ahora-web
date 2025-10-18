@@ -28,10 +28,10 @@ const Benefits = () => {
     <section className="py-24 bg-gradient-to-br from-calma-coral/25 via-calma-peach/20 to-calma-rose/20">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16 animate-fade-in-up">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
             Beneficios reales para tu bienestar
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
             CalmaAhora transforma tu relación con las emociones y mejora tu calidad de vida
           </p>
         </div>
