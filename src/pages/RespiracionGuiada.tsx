@@ -115,43 +115,67 @@ const RespiracionGuiada = () => {
   const instrucciones = obtenerInstrucciones(tecnicaElegida);
   const mensajePersonalizado = obtenerMensajePersonalizado(perfilNumerologico);
 
-  // Inicializar música de fondo
+  // Música de fondo por técnica
   useEffect(() => {
-    const musicUrl = 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3';
-    
-    audioRef.current = new Audio(musicUrl);
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.3;
-    
+    // Librería base (relajante, libre de derechos)
+    const baseUrl = 'https://cdn.pixabay.com/audio/2022/03/10/audio_4d8b925097.mp3';
+
+    const musicMap: Record<string, { url: string; volume: number; rate: number }> = {
+      'Respiración 4-6': { url: baseUrl, volume: 0.28, rate: 1.0 },
+      'Respiración Cuadrada': { url: baseUrl, volume: 0.24, rate: 0.95 },
+      'Respiración 4-7-8': { url: baseUrl, volume: 0.2, rate: 0.9 },
+      'Respiración Coherente (5-5)': { url: baseUrl, volume: 0.26, rate: 1.0 },
+      'Suspiro Fisiológico': { url: baseUrl, volume: 0.3, rate: 1.05 },
+    };
+
+    const cfg = musicMap[tecnicaElegida] || { url: baseUrl, volume: 0.26, rate: 1.0 };
+
+    // Detener cualquier pista anterior
+    if (audioRef.current) {
+      try { audioRef.current.pause(); } catch {}
+      audioRef.current = null;
+    }
+
+    const audio = new Audio(cfg.url);
+    audioRef.current = audio;
+    audio.loop = true;
+    audio.playbackRate = cfg.rate;
+
     // Fade in
-    audioRef.current.volume = 0;
-    audioRef.current.play().catch(error => {
+    audio.volume = 0;
+    audio.play().catch(error => {
       console.log('Autoplay prevented:', error);
     });
-    
+
+    const step = 0.05;
+    const target = cfg.volume;
     let fadeIn = setInterval(() => {
-      if (audioRef.current && audioRef.current.volume < 0.3) {
-        audioRef.current.volume = Math.min(0.3, audioRef.current.volume + 0.05);
+      if (!audioRef.current) return clearInterval(fadeIn);
+      if (audio.volume < target - 0.01) {
+        audio.volume = Math.min(target, audio.volume + step);
       } else {
         clearInterval(fadeIn);
       }
-    }, 100);
+    }, 120);
 
     return () => {
       clearInterval(fadeIn);
       if (audioRef.current) {
         const fadeOut = setInterval(() => {
-          if (audioRef.current && audioRef.current.volume > 0.05) {
-            audioRef.current.volume = Math.max(0, audioRef.current.volume - 0.05);
+          if (!audioRef.current) return clearInterval(fadeOut);
+          if (audio.volume > 0.05) {
+            audio.volume = Math.max(0, audio.volume - step);
           } else {
             clearInterval(fadeOut);
-            audioRef.current?.pause();
-            audioRef.current = null;
+            audio.pause();
+            if (audioRef.current === audio) {
+              audioRef.current = null;
+            }
           }
-        }, 100);
+        }, 120);
       }
     };
-  }, []);
+  }, [tecnicaElegida]);
 
   useEffect(() => {
     const instrucciones = obtenerInstrucciones(tecnicaElegida);
