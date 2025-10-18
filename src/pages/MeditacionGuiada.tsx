@@ -170,9 +170,21 @@ const MeditacionGuiada = () => {
         audio.volume = audioMuted ? 0 : 1;
         currentAudioRef.current = audio;
         
+        // Esperar 2 segundos después de que termine el audio para avanzar
         audio.onended = () => {
           setIsNarrating(false);
           URL.revokeObjectURL(url);
+          
+          // Esperar 2 segundos adicionales antes de avanzar al siguiente paso
+          setTimeout(() => {
+            if (pasoActual < config.pasos.length - 1) {
+              const siguiente = pasoActual + 1;
+              setPasoActual(siguiente);
+              narrarPaso(siguiente);
+            } else {
+              finalizarMeditacion();
+            }
+          }, 2000);
         };
         
         await audio.play();
@@ -183,23 +195,6 @@ const MeditacionGuiada = () => {
       setIsNarrating(false);
     }
   };
-
-  // Avance automático de pasos cada 8 segundos
-  useEffect(() => {
-    if (!iniciada || finalizada) return;
-
-    const timer = setTimeout(() => {
-      if (pasoActual < config.pasos.length - 1) {
-        const siguiente = pasoActual + 1;
-        setPasoActual(siguiente);
-        narrarPaso(siguiente);
-      } else {
-        finalizarMeditacion();
-      }
-    }, 8000);
-
-    return () => clearTimeout(timer);
-  }, [pasoActual, iniciada, finalizada]);
 
   const finalizarMeditacion = () => {
     setFinalizada(true);
@@ -375,7 +370,7 @@ const MeditacionGuiada = () => {
               {config.pasos[pasoActual]}
             </h2>
             <p className="text-xs text-calma-ocean/40 italic pt-2">
-              Avance automático en 8 segundos...
+              Escucha y respira...
             </p>
           </div>
         </div>
