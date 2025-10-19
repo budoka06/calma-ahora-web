@@ -44,14 +44,6 @@ export function NavigationDrawer() {
 
   return (
     <Sidebar className={open ? "w-64" : "w-14"} collapsible="icon">
-      <SidebarHeader className="border-b p-4 bg-background">
-        {open && (
-          <h2 className="text-xl font-bold bg-gradient-peace bg-clip-text text-transparent">
-            Calma
-          </h2>
-        )}
-      </SidebarHeader>
-
       <SidebarContent className="bg-background">
         <SidebarGroup>
           {open && <SidebarGroupLabel className="text-muted-foreground px-3 py-2">Navegación</SidebarGroupLabel>}
