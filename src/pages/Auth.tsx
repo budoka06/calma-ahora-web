@@ -115,34 +115,6 @@ const Auth = () => {
           </p>
         </div>
 
-        <div className="space-y-3">
-          <Button
-            onClick={() => handleOAuthLogin('google')}
-            variant="outline"
-            className="w-full h-12"
-            disabled={loading}
-          >
-            Continuar con Google
-          </Button>
-
-          <Button
-            onClick={() => handleOAuthLogin('azure')}
-            variant="outline"
-            className="w-full h-12"
-            disabled={loading}
-          >
-            Continuar con Microsoft
-          </Button>
-        </div>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-2 text-muted-foreground">O continúa con email</span>
-          </div>
-        </div>
 
         <form onSubmit={handleEmailAuth} className="space-y-4">
           <div className="space-y-2">
