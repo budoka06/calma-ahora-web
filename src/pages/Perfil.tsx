@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { User, LogOut, TrendingUp, Heart, Sparkles, Calendar } from 'lucide-react';
-import BackButton from '@/components/BackButton';
+
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAppContext } from '@/contexts/AppContext';
@@ -144,7 +144,6 @@ const Perfil = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-calma-sky via-calma-mint to-calma-lavender p-4">
-      <BackButton />
       <div className="max-w-6xl mx-auto pt-20 pb-8 space-y-6">
         {/* Header */}
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-elegant p-8">
