@@ -44,7 +44,7 @@ export function NavigationDrawer() {
 
   return (
     <Sidebar className={open ? "w-64" : "w-14"} collapsible="icon">
-      <SidebarHeader className="border-b p-4">
+      <SidebarHeader className="border-b p-4 bg-background">
         {open && (
           <h2 className="text-xl font-bold bg-gradient-peace bg-clip-text text-transparent">
             Calma
@@ -52,26 +52,30 @@ export function NavigationDrawer() {
         )}
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="bg-background">
         <SidebarGroup>
-          <SidebarGroupLabel>Navegación</SidebarGroupLabel>
+          {open && <SidebarGroupLabel className="text-muted-foreground px-3 py-2">Navegación</SidebarGroupLabel>}
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="space-y-1 px-2">
               {menuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <NavLink
-                      to={item.url}
-                      className={({ isActive }) =>
-                        isActive
-                          ? "bg-primary/10 text-primary font-medium"
-                          : "hover:bg-muted/50"
-                      }
-                    >
-                      <item.icon className="h-5 w-5" />
-                      {open && <span>{item.title}</span>}
-                    </NavLink>
-                  </SidebarMenuButton>
+                  <NavLink to={item.url} end>
+                    {({ isActive }) => (
+                      <SidebarMenuButton
+                        isActive={isActive}
+                        className={`
+                          w-full justify-start gap-3 px-3 py-2.5 rounded-lg transition-all duration-200
+                          ${isActive 
+                            ? "bg-primary text-primary-foreground font-medium shadow-sm hover:bg-primary/90" 
+                            : "hover:bg-muted text-foreground"
+                          }
+                        `}
+                      >
+                        <item.icon className={`h-5 w-5 ${!open && "mx-auto"}`} />
+                        {open && <span className="truncate">{item.title}</span>}
+                      </SidebarMenuButton>
+                    )}
+                  </NavLink>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -79,11 +83,14 @@ export function NavigationDrawer() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t p-4">
+      <SidebarFooter className="border-t p-2 bg-background">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton onClick={handleLogout}>
-              <LogOut className="h-5 w-5" />
+            <SidebarMenuButton
+              onClick={handleLogout}
+              className="w-full justify-start gap-3 px-3 py-2.5 rounded-lg text-destructive hover:bg-destructive/10 hover:text-destructive transition-all duration-200"
+            >
+              <LogOut className={`h-5 w-5 ${!open && "mx-auto"}`} />
               {open && <span>Cerrar Sesión</span>}
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -95,8 +102,8 @@ export function NavigationDrawer() {
 
 export function NavigationDrawerTrigger() {
   return (
-    <SidebarTrigger className="fixed top-4 left-4 z-50">
-      <Menu className="h-6 w-6" />
+    <SidebarTrigger className="fixed top-4 left-4 z-50 bg-background border rounded-lg p-2 shadow-lg hover:bg-muted transition-colors duration-200">
+      <Menu className="h-5 w-5" />
     </SidebarTrigger>
   );
 }
