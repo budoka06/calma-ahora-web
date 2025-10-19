@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AppProvider } from "./contexts/AppContext";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { NavigationDrawer, NavigationDrawerTrigger } from "./components/NavigationDrawer";
+import { NavigationDrawer } from "./components/NavigationDrawer";
 import SOSButton from "./components/SOSButton";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,7 +52,6 @@ function AppContent() {
     <>
       <Toaster />
       <Sonner />
-      {showDrawer && <NavigationDrawerTrigger />}
       <SOSButton />
       <Routes>
         <Route path="/" element={<Index />} />
