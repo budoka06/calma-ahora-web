@@ -2,9 +2,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AppProvider } from "./contexts/AppContext";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { NavigationDrawer, NavigationDrawerTrigger } from "./components/NavigationDrawer";
 import SOSButton from "./components/SOSButton";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import RegistroUsuario from "./pages/RegistroUsuario";
@@ -24,33 +28,68 @@ import NumerologiaHistorial from "./pages/NumerologiaHistorial";
 
 const queryClient = new QueryClient();
 
+function AppContent() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthenticated(!!session);
+      setLoading(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const showDrawer = isAuthenticated && location.pathname !== "/auth" && !loading;
+
+  return (
+    <>
+      <Toaster />
+      <Sonner />
+      {showDrawer && <NavigationDrawerTrigger />}
+      <SOSButton />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/registro" element={<RegistroUsuario />} />
+        <Route path="/check-in" element={<CheckInEmocional />} />
+        <Route path="/selector-respiracion" element={<SelectorRespiracion />} />
+        <Route path="/respiracion-guiada" element={<RespiracionGuiada />} />
+        <Route path="/respiracion-sos" element={<RespiracionSOS />} />
+        <Route path="/meditacion" element={<MeditacionGuiada />} />
+        <Route path="/feedback" element={<FeedbackEmocional />} />
+        <Route path="/bitacora" element={<BitacoraEmocional />} />
+        <Route path="/chat" element={<ChatEmpatico />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/numerologia" element={<NumerologiaInicio />} />
+        <Route path="/numerologia/resultados/:id" element={<NumerologiaResultados />} />
+        <Route path="/numerologia/historial" element={<NumerologiaHistorial />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AppProvider>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
         <BrowserRouter>
-          <SOSButton />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/registro" element={<RegistroUsuario />} />
-            <Route path="/check-in" element={<CheckInEmocional />} />
-            <Route path="/selector-respiracion" element={<SelectorRespiracion />} />
-            <Route path="/respiracion-guiada" element={<RespiracionGuiada />} />
-            <Route path="/respiracion-sos" element={<RespiracionSOS />} />
-            <Route path="/meditacion" element={<MeditacionGuiada />} />
-            <Route path="/feedback" element={<FeedbackEmocional />} />
-            <Route path="/bitacora" element={<BitacoraEmocional />} />
-            <Route path="/chat" element={<ChatEmpatico />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/perfil" element={<Perfil />} />
-            <Route path="/numerologia" element={<NumerologiaInicio />} />
-            <Route path="/numerologia/resultados/:id" element={<NumerologiaResultados />} />
-            <Route path="/numerologia/historial" element={<NumerologiaHistorial />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <SidebarProvider>
+            <div className="flex min-h-screen w-full">
+              <NavigationDrawer />
+              <main className="flex-1">
+                <AppContent />
+              </main>
+            </div>
+          </SidebarProvider>
         </BrowserRouter>
       </TooltipProvider>
     </AppProvider>
