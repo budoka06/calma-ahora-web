@@ -76,19 +76,44 @@ function AppContent() {
   );
 }
 
+function AppWrapper() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthenticated(!!session);
+      setLoading(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const showDrawer = isAuthenticated && location.pathname !== "/auth" && !loading;
+
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full">
+        {showDrawer && <NavigationDrawer />}
+        <main className="flex-1">
+          <AppContent />
+        </main>
+      </div>
+    </SidebarProvider>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AppProvider>
       <TooltipProvider>
         <BrowserRouter>
-          <SidebarProvider>
-            <div className="flex min-h-screen w-full">
-              <NavigationDrawer />
-              <main className="flex-1">
-                <AppContent />
-              </main>
-            </div>
-          </SidebarProvider>
+          <AppWrapper />
         </BrowserRouter>
       </TooltipProvider>
     </AppProvider>
